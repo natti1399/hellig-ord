@@ -25,6 +25,7 @@ export async function FeaturedProductSection() {
 
   return (
     <section
+      id="produkt"
       className="bg-background py-16 md:py-24"
       aria-labelledby="featured-product-heading"
     >
