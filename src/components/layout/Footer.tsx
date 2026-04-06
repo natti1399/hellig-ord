@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Separator } from "@/components/ui/separator"
+import { PaymentIcons } from "@/components/shared/PaymentIcons"
 
 interface FooterLinkGroup {
   heading: string
@@ -20,7 +21,15 @@ const linkGroups: FooterLinkGroup[] = [
       { href: "/faq", label: "FAQ" },
       { href: "/kontakt", label: "Kontakt oss" },
       { href: "/frakt-og-retur", label: "Frakt og retur" },
+    ],
+  },
+  {
+    heading: "Juridisk",
+    links: [
+      { href: "/vilkar", label: "Kjøpsvilkår" },
       { href: "/personvern", label: "Personvern" },
+      { href: "/frakt-og-retur#returpolicy", label: "Angrerett" },
+      { href: "/informasjonskapsler", label: "Informasjonskapsler" },
     ],
   },
 ]
@@ -59,6 +68,12 @@ export function Footer() {
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
               Vi tilbyr vakre kristne produkter som bringer Guds ord nærmere hjertet. Hvert produkt er laget med kjærlighet og omtanke.
             </p>
+
+            {/* Payment icons */}
+            <div className="mt-4">
+              <p className="text-xs font-medium text-muted-foreground mb-2">Trygg betaling</p>
+              <PaymentIcons size="sm" />
+            </div>
           </div>
 
           {/* Link columns */}

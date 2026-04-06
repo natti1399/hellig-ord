@@ -75,11 +75,10 @@ export default function FraktOgReturPage() {
         {/* Quick summary cards */}
         <div className="border-b border-border/50 bg-muted/40">
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-8">
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-              <InfoCard label="Leveringstid" value="5–10 virkedager" />
-              <InfoCard label="Standardfrakt" value="79 kr" />
-              <InfoCard label="Gratis frakt" value="Over 499 kr" />
-              <InfoCard label="Angrerett" value="14 dager" />
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+              <InfoCard label="Leveringstid" value="Ca. 10 dager" />
+              <InfoCard label="Frakt" value="Gratis i hele Norge" />
+              <InfoCard label="Åpent kjøp" value="30 dager" />
             </div>
           </div>
         </div>
@@ -98,7 +97,7 @@ export default function FraktOgReturPage() {
               </strong>{" "}
               Forventet leveringstid er{" "}
               <strong className="font-semibold text-foreground">
-                5–10 virkedager
+                ca. 10 dager
               </strong>{" "}
               etter at bestillingen er bekreftet og betaling er godkjent.
               Leveringstiden kan variere avhengig av din posisjon i landet og
@@ -107,21 +106,13 @@ export default function FraktOgReturPage() {
             <p>
               <strong className="font-semibold text-foreground">
                 Fraktkostnader:
-              </strong>
+              </strong>{" "}
+              Vi tilbyr{" "}
+              <strong className="font-semibold text-foreground">
+                gratis levering i hele Norge
+              </strong>{" "}
+              på alle bestillinger — uansett beløp.
             </p>
-            <ul className="list-disc list-inside space-y-2 pl-1">
-              <li>
-                <strong className="font-semibold text-foreground">
-                  Gratis frakt
-                </strong>{" "}
-                ved bestillinger over{" "}
-                <strong className="font-semibold text-foreground">499 kr</strong>.
-              </li>
-              <li>
-                <strong className="font-semibold text-foreground">79 kr</strong>{" "}
-                for standardfrakt ved bestillinger under 499 kr.
-              </li>
-            </ul>
             <p>
               Alle priser er oppgitt inkludert MVA.
             </p>
@@ -149,15 +140,7 @@ export default function FraktOgReturPage() {
             </p>
             <p>
               Vi jobber med å utvide våre leveringsmuligheter, og håper å
-              kunne tilby internasjonal frakt i fremtiden. Hold deg oppdatert
-              ved å abonnere på{" "}
-              <Link
-                href="/nyhetsbrev"
-                className="text-primary underline underline-offset-4 hover:text-primary/80 transition-colors duration-150"
-              >
-                nyhetsbrevet vårt
-              </Link>
-              .
+              kunne tilby internasjonal frakt i fremtiden.
             </p>
           </PolicySection>
 
@@ -166,18 +149,17 @@ export default function FraktOgReturPage() {
           <PolicySection id="returpolicy" heading="3. Returpolicy">
             <p>
               Vi ønsker at du skal være helt fornøyd med kjøpet ditt. Dersom
-              du av en eller annen grunn ikke er fornøyd, har du rett til å
-              returnere varen i henhold til{" "}
+              du av en eller annen grunn ikke er fornøyd, tilbyr vi{" "}
               <strong className="font-semibold text-foreground">
-                angrerettloven
-              </strong>
-              .
+                30 dagers åpent kjøp
+              </strong>{" "}
+              fra den dagen du mottar varen.
             </p>
             <p>
               <strong className="font-semibold text-foreground">
-                Angrefristen er 14 dager
+                Returfristen er 30 dager
               </strong>{" "}
-              fra den dagen du mottar varen. For å benytte deg av angreretten
+              fra den dagen du mottar varen. For å benytte deg av returetten
               må du informere oss innen fristen utløper.
             </p>
             <p>
@@ -238,7 +220,7 @@ export default function FraktOgReturPage() {
                 >
                   retur@helligeord.no
                 </a>{" "}
-                innen 14 dager etter mottak av varen. Oppgi ordrenummeret ditt
+                innen 30 dager etter mottak av varen. Oppgi ordrenummeret ditt
                 og beskriv årsaken til returen.
               </li>
               <li>

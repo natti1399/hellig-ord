@@ -3,7 +3,7 @@ import { HeroSection } from "@/components/home/HeroSection"
 import { WhatsIncludedSection } from "@/components/home/WhatsIncludedSection"
 import { FeaturedProductSection } from "@/components/home/FeaturedProductSection"
 import { GiftOccasionsSection } from "@/components/home/GiftOccasionsSection"
-import { BibleQuoteSection } from "@/components/home/BibleQuoteSection"
+import { EmotionalSection } from "@/components/home/EmotionalSection"
 import { AboutSection } from "@/components/home/AboutSection"
 
 export const metadata: Metadata = {
@@ -26,11 +26,11 @@ export default function HomePage() {
       {/* Story: What's in the box */}
       <WhatsIncludedSection />
 
+      {/* Emotional copy — sell the feeling */}
+      <EmotionalSection />
+
       {/* Offer: Product card with price and buy button */}
       <FeaturedProductSection />
-
-      {/* Emotional anchor */}
-      <BibleQuoteSection />
 
       {/* Who it's for */}
       <GiftOccasionsSection />

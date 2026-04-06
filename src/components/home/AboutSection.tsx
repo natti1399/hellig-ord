@@ -6,12 +6,12 @@ const trustPoints = [
   {
     icon: ShieldCheck,
     title: "Trygg handel",
-    description: "Sikker betaling med Vipps. Norsk nettbutikk med org.nr.",
+    description: "Sikker betaling med Vipps og Klarna. Norsk nettbutikk med org.nr.",
   },
   {
     icon: Truck,
-    title: "Rask levering",
-    description: "Sendes innen 1–3 virkedager til hele Norge.",
+    title: "Gratis levering",
+    description: "Gratis frakt til hele Norge. Leveringstid ca. 10 dager.",
   },
   {
     icon: Heart,

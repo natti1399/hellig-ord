@@ -1,7 +1,6 @@
 "use client"
 
 import { Toaster } from "@/components/ui/sonner"
-import { WelcomePopup } from "@/components/notifications/WelcomePopup"
 import { CartProvider } from "@/context/CartContext"
 
 interface ProvidersProps {
@@ -32,7 +31,6 @@ export function Providers({ children }: ProvidersProps) {
         }
       />
 
-      <WelcomePopup />
     </CartProvider>
   )
 }

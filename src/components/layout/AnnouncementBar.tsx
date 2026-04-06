@@ -1,7 +1,7 @@
 const announcements = [
-  "✝ Gratis frakt over 499 kr ✝",
-  "✝ Nye produkter hver uke ✝",
-  "✝ Trygg og sikker betaling ✝",
+  "✝ Gratis levering i hele Norge ✝",
+  "✝ 30 dagers åpent kjøp ✝",
+  "✝ Trygg betaling med Vipps og Klarna ✝",
 ]
 
 export function AnnouncementBar() {

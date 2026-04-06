@@ -142,8 +142,8 @@ export default function VilkarPage() {
           <PolicySection id="priser-betaling" heading="3. Priser og betaling">
             <p>
               Alle priser på helligeord.no er oppgitt i norske kroner (NOK) og
-              inkluderer merverdiavgift (MVA). Fraktkostnader kommer i tillegg
-              og vises tydelig i kassen før du bekrefter bestillingen.
+              inkluderer merverdiavgift (MVA). Frakt er gratis på alle
+              bestillinger i Norge.
             </p>
             <p>
               Vi aksepterer følgende betalingsmetoder:
@@ -203,20 +203,20 @@ export default function VilkarPage() {
 
           <PolicySection id="angrerett" heading="5. Angrerett">
             <p>
-              I henhold til{" "}
+              Vi tilbyr{" "}
               <strong className="font-semibold text-foreground">
-                angrerettloven
+                30 dagers åpent kjøp
               </strong>{" "}
-              har du som forbruker rett til å angre kjøpet ditt innen{" "}
+              — du kan returnere varen innen{" "}
               <strong className="font-semibold text-foreground">
-                14 dager
+                30 dager
               </strong>{" "}
-              etter at du har mottatt varen, uten å oppgi noen grunn.
+              etter at du har mottatt den, uten å oppgi noen grunn.
             </p>
             <p>
-              Angrefristen begynner å løpe fra den dagen du mottar varen. For
-              å benytte deg av angreretten, må du informere oss om din
-              beslutning innen angrefristen utløper. Dette gjøres ved å sende
+              Returfristen begynner å løpe fra den dagen du mottar varen. For
+              å benytte deg av returetten, må du informere oss om din
+              beslutning innen fristen utløper. Dette gjøres ved å sende
               en e-post til{" "}
               <a
                 href="mailto:retur@helligeord.no"
@@ -248,7 +248,7 @@ export default function VilkarPage() {
             <p>
               Refusjon behandles innen{" "}
               <strong className="font-semibold text-foreground">14 virkedager</strong>{" "}
-              etter at vi har mottatt varen i retur.
+              etter at vi har mottatt den returnerte varen.
             </p>
           </PolicySection>
 
