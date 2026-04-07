@@ -1,42 +1,43 @@
 import type { Metadata } from "next"
 import { HeroSection } from "@/components/home/HeroSection"
+import { SocialProofSection } from "@/components/home/SocialProofSection"
+import { ProductIntroSection } from "@/components/home/ProductIntroSection"
 import { WhatsIncludedSection } from "@/components/home/WhatsIncludedSection"
-import { FeaturedProductSection } from "@/components/home/FeaturedProductSection"
+import { HowItWorksSection } from "@/components/home/HowItWorksSection"
 import { GiftOccasionsSection } from "@/components/home/GiftOccasionsSection"
 import { EmotionalSection } from "@/components/home/EmotionalSection"
-import { AboutSection } from "@/components/home/AboutSection"
+import { FeaturedProductSection } from "@/components/home/FeaturedProductSection"
+import { TrustSection } from "@/components/home/TrustSection"
+import { HomepageFAQ } from "@/components/home/HomepageFAQ"
+import { BottomCTASection } from "@/components/home/BottomCTASection"
+import { StickyMobileCTA } from "@/components/home/StickyMobileCTA"
 
 export const metadata: Metadata = {
-  title: "Hellig Ord – 60 bibelvers for alle livets øyeblikk",
+  title: "Hellig Ord – En gave som gir ro, håp og styrke",
   description:
-    "En vakker glaskrukke fylt med 60 håndplukkede bibelvers. Perfekt som gave til konfirmasjon, bursdag, jul — eller til deg selv som daglig inspirasjon.",
+    "Bibelvers-krukken: 60 håndplukkede bibelvers i en vakker glaskrukke. Gratis frakt i hele Norge. Perfekt gave til konfirmasjon, bursdag, jul — eller til deg selv.",
   openGraph: {
-    title: "Hellig Ord – 60 bibelvers for alle livets øyeblikk",
+    title: "Hellig Ord – En gave som gir ro, håp og styrke",
     description:
-      "En vakker glaskrukke fylt med 60 håndplukkede bibelvers. Perfekt gave til alle anledninger.",
+      "Trekk et bibelvers når du trenger det mest. Gratis frakt. 30 dagers åpent kjøp.",
   },
 }
 
 export default function HomePage() {
   return (
     <>
-      {/* Hook: Product-focused hero with direct CTA */}
       <HeroSection />
-
-      {/* Story: What's in the box */}
+      <SocialProofSection />
+      <ProductIntroSection />
       <WhatsIncludedSection />
-
-      {/* Emotional copy — sell the feeling */}
-      <EmotionalSection />
-
-      {/* Offer: Product card with price and buy button */}
+      <HowItWorksSection />
       <FeaturedProductSection />
-
-      {/* Who it's for */}
       <GiftOccasionsSection />
-
-      {/* Trust signals */}
-      <AboutSection />
+      <EmotionalSection />
+      <TrustSection />
+      <HomepageFAQ />
+      <BottomCTASection />
+      <StickyMobileCTA />
     </>
   )
 }

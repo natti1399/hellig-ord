@@ -4,7 +4,6 @@ import {
   Gift,
   Star,
   Church,
-  Sparkles,
   Sun,
 } from 'lucide-react'
 import { FadeInSection } from './FadeInSection'
@@ -17,40 +16,34 @@ interface GiftOccasion {
 
 const occasions: GiftOccasion[] = [
   {
-    icon: Church,
-    title: 'Konfirmasjon',
+    icon: Heart,
+    title: 'Noen som går gjennom en tøff tid',
     description:
-      'Et minneverdig og meningsfylt gave til den store dagen — bibelvers som inspirerer på veien videre.',
+      'Gi trøst og håp med ord som virkelig betyr noe.',
   },
   {
     icon: Gift,
     title: 'Bursdag',
     description:
-      'Gi noe som varer lengre enn blomster. En gave med Guds ord som gir glede dag etter dag.',
+      'En meningsfull gave som varer lengre enn blomster.',
+  },
+  {
+    icon: Church,
+    title: 'Dåp / konfirmasjon',
+    description:
+      'Feir en milepæl med bibelvers som inspirerer videre.',
   },
   {
     icon: Star,
-    title: 'Jul og høytider',
+    title: 'Jul',
     description:
-      'Perfekt under juletreet eller som adventsgave — ord som varmer hjertet i høytiden.',
-  },
-  {
-    icon: Sparkles,
-    title: 'Dåp',
-    description:
-      'Feir et nytt liv med en gave som bærer velsignelse og Guds løfter inn i hjemmet.',
-  },
-  {
-    icon: Heart,
-    title: 'Bryllup',
-    description:
-      'Et vakkert symbol på kjærlighet og tro — bibelvers som kan bære paret gjennom livet sammen.',
+      'Perfekt under juletreet — ord som varmer hjertet.',
   },
   {
     icon: Sun,
-    title: 'Til deg selv',
+    title: 'Eller deg selv',
     description:
-      'Som daglig inspirasjon — trekk et vers hver morgen og start dagen forankret i noe større.',
+      'Daglig inspirasjon — start dagen med Guds ord.',
   },
 ]
 

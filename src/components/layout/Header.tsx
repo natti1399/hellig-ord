@@ -25,6 +25,7 @@ const navLinks: NavLink[] = [
   { href: "/produkter", label: "Produkter" },
   { href: "/om-oss", label: "Om Oss" },
   { href: "/kontakt", label: "Kontakt" },
+  { href: "/faq", label: "FAQ" },
 ]
 
 function NavItem({ href, label }: NavLink) {
