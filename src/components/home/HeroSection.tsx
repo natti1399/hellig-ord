@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
@@ -13,12 +12,10 @@ const trustBadges = [
   { icon: Store, text: 'Norsk nettbutikk' },
   { icon: Truck, text: 'Gratis frakt i hele Norge' },
   { icon: RotateCcw, text: '30 dagers åpent kjøp' },
-  { icon: ShieldCheck, text: 'Trygg betaling (Vipps / Klarna)' },
+  { icon: ShieldCheck, text: 'Kjøp trygt med Vipps og Klarna' },
 ]
 
 export function HeroSection() {
-  const [imageLoaded, setImageLoaded] = useState(false)
-
   return (
     <section className="relative overflow-hidden bg-background" aria-label="Produktpresentasjon">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -84,20 +81,19 @@ export function HeroSection() {
 
           {/* Product image + payment icons */}
           <motion.div
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: imageLoaded ? 1 : 0, x: imageLoaded ? 0 : 20 }}
-            transition={{ duration: 0.8, ease: 'easeOut' }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
             className="relative mx-auto w-full max-w-lg lg:max-w-none"
           >
-            <div className="relative aspect-square w-full bg-background">
+            <div className="relative aspect-square w-full">
               <Image
                 src="/images/hero-product.png"
                 alt="Bibelvers-krukke – en vakker glaskrukke fylt med 60 fargekodede bibelvers"
                 fill
-                className="object-contain mix-blend-multiply"
+                className="object-contain"
                 priority
                 sizes="(max-width: 768px) 100vw, 50vw"
-                onLoad={() => setImageLoaded(true)}
               />
             </div>
             {/* Payment icons under product image */}
