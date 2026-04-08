@@ -91,7 +91,7 @@ export function HeroSection() {
                 src="/images/hero-product.png"
                 alt="Bibelvers-krukke – en vakker glaskrukke fylt med 60 fargekodede bibelvers"
                 fill
-                className="object-contain"
+                className="object-contain mix-blend-multiply"
                 priority
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
