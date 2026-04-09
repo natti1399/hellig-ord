@@ -10,7 +10,7 @@ import {
   AccordionTrigger,
   AccordionContent,
 } from "@/components/ui/accordion"
-import { ShoppingBagIcon } from "lucide-react"
+import { ShoppingBagIcon, Gift, Truck, Flame, Clock, RotateCcw, MapPin } from "lucide-react"
 import { useCart } from "@/context/CartContext"
 import { showAddToCartToast } from "@/components/notifications/AddToCartToast"
 
@@ -67,6 +67,15 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         {price}
       </p>
 
+      <div className="flex flex-wrap gap-x-5 gap-y-1.5">
+        <span className="flex items-center gap-1.5 font-sans text-sm text-muted-foreground">
+          <Gift className="size-3.5 text-accent" /> Perfekt gave
+        </span>
+        <span className="flex items-center gap-1.5 font-sans text-sm text-muted-foreground">
+          <Truck className="size-3.5 text-accent" /> Gratis frakt inkludert
+        </span>
+      </div>
+
       {/* Variant selector */}
       {hasMultipleVariants && (
         <div className="flex flex-col gap-2">
@@ -100,7 +109,10 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         <QuantitySelector onChange={setQuantity} />
       </div>
 
-      {/* Add to cart */}
+      <p className="text-center font-sans text-sm italic text-muted-foreground">
+        Når livet er tungt, kan ett lite vers gi ro.
+      </p>
+
       <button
         type="button"
         onClick={handleAddToCart}
@@ -117,6 +129,30 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
           Dette produktet er for øyeblikket ikke tilgjengelig.
         </p>
       )}
+
+      <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5">
+        <span className="flex items-center gap-1.5 font-sans text-xs font-medium text-muted-foreground">
+          <Flame className="size-3.5 text-orange-500" /> Over 500 fornøyde kunder
+        </span>
+        <span className="flex items-center gap-1.5 font-sans text-xs font-medium text-accent">
+          <Clock className="size-3.5" /> Begrenset lager
+        </span>
+      </div>
+
+      <div className="flex flex-col gap-2 rounded-xl border border-border bg-muted/30 p-4">
+        <div className="flex items-center gap-2 font-sans text-sm text-foreground">
+          <RotateCcw className="size-4 text-accent" />
+          <span>30 dagers åpent kjøp – helt risikofritt</span>
+        </div>
+        <div className="flex items-center gap-2 font-sans text-sm text-foreground">
+          <MapPin className="size-4 text-accent" />
+          <span>Sendes fra Norge</span>
+        </div>
+        <div className="flex items-center gap-2 font-sans text-sm text-foreground">
+          <Truck className="size-4 text-accent" />
+          <span>Rask levering</span>
+        </div>
+      </div>
 
       {/* Product details accordion */}
       <div className="mt-2 border-t border-border pt-6">

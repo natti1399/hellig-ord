@@ -129,7 +129,12 @@ export default async function ProductPage({
               {product.title}
             </h1>
 
-            {/* Description */}
+            <div className="flex flex-col gap-1.5 mt-1">
+              <span className="text-sm font-medium text-foreground">💛 Gir ro i hverdagen</span>
+              <span className="text-sm font-medium text-foreground">🙏 Gir trøst og styrke</span>
+              <span className="text-sm font-medium text-foreground">🎁 En gave med ekte mening</span>
+            </div>
+
             <p className="font-sans text-base leading-relaxed text-muted-foreground">
               {product.description.slice(0, 250)}
               {product.description.length > 250 ? "…" : ""}

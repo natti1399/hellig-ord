@@ -12,7 +12,7 @@ const trustBadges = [
   { icon: Store, text: 'Norsk nettbutikk' },
   { icon: Truck, text: 'Gratis frakt i hele Norge' },
   { icon: RotateCcw, text: '30 dagers åpent kjøp' },
-  { icon: ShieldCheck, text: 'Kjøp trygt med Vipps og Klarna' },
+  { icon: ShieldCheck, text: 'Trygg betaling' },
 ]
 
 export function HeroSection() {
@@ -99,7 +99,7 @@ export function HeroSection() {
             {/* Payment icons under product image */}
             <div className="mt-4 flex flex-col items-center gap-2">
               <p className="font-sans text-xs font-medium text-muted-foreground">
-                Trygg betaling
+                Kjøp trygt med Klarna eller Vipps
               </p>
               <PaymentIcons size="md" />
             </div>
