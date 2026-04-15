@@ -1,7 +1,7 @@
 const announcements = [
+  "✝ Guds ord gir lys ✝",
   "✝ Gratis levering i hele Norge ✝",
   "✝ 30 dagers åpent kjøp ✝",
-  "✝ Trygg betaling med Vipps og Klarna ✝",
 ]
 
 export function AnnouncementBar() {

@@ -96,7 +96,7 @@ export async function FeaturedProductSection() {
               <ul className="mt-5 space-y-2" aria-label="Produktegenskaper">
                 {[
                   "60 fargerike kort med bibelvers",
-                  "Etikett med «LES MEG NÅR...»",
+                  "Etikett med «Les meg når...»",
                   "Inkludert gaveeske med kors",
                 ].map((feature) => (
                   <li

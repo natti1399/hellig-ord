@@ -19,7 +19,7 @@ export function HeroSection() {
   return (
     <section className="relative overflow-hidden bg-background" aria-label="Produktpresentasjon">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid min-h-[75vh] items-center gap-8 py-16 md:py-20 lg:grid-cols-2 lg:gap-12 lg:py-24">
+        <div className="grid items-center gap-8 pt-8 pb-14 md:pt-10 md:pb-16 lg:grid-cols-2 lg:gap-12 lg:pt-12 lg:pb-20">
 
           {/* Text content */}
           <div className="flex flex-col items-center text-center lg:items-start lg:text-left">
@@ -97,10 +97,7 @@ export function HeroSection() {
               />
             </div>
             {/* Payment icons under product image */}
-            <div className="mt-4 flex flex-col items-center gap-2">
-              <p className="font-sans text-xs font-medium text-muted-foreground">
-                Kjøp trygt med Klarna eller Vipps
-              </p>
+            <div className="mt-4 flex justify-center">
               <PaymentIcons size="md" />
             </div>
           </motion.div>

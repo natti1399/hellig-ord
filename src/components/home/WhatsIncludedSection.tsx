@@ -30,7 +30,7 @@ const includedItems: readonly IncludedItem[] = [
   },
   {
     icon: BookMarked,
-    title: 'Etikett: «LES MEG NÅR...»',
+    title: 'Etikett: «Les meg når...»',
     description:
       'Krukken leveres med en etikett som hjelper deg å trekke det verset som passer øyeblikket.',
   },

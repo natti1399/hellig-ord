@@ -20,9 +20,9 @@ const steps = [
 
 export function HowItWorksSection() {
   return (
-    <section className="bg-muted/50 py-16 md:py-24" aria-labelledby="how-it-works-heading">
+    <section className="bg-muted/50 py-10 md:py-16" aria-labelledby="how-it-works-heading">
       <div className="mx-auto max-w-4xl px-6 lg:px-8">
-        <FadeInSection className="text-center mb-12" delay={0}>
+        <FadeInSection className="text-center mb-10" delay={0}>
           <h2
             id="how-it-works-heading"
             className="font-heading text-2xl font-bold tracking-wider text-primary sm:text-3xl"

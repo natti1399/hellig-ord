@@ -25,7 +25,7 @@ export function StickyMobileCTA() {
         href={PRODUCT_URL}
         className="flex h-12 w-full items-center justify-center rounded-full bg-primary text-sm font-semibold tracking-wide text-primary-foreground shadow-lg"
       >
-        Bestill din krukke nå – gratis frakt
+        Bestill din krukke nå
       </Link>
     </div>
   )

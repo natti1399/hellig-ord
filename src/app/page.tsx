@@ -7,8 +7,6 @@ import { HowItWorksSection } from "@/components/home/HowItWorksSection"
 import { GiftOccasionsSection } from "@/components/home/GiftOccasionsSection"
 import { EmotionalSection } from "@/components/home/EmotionalSection"
 import { FeaturedProductSection } from "@/components/home/FeaturedProductSection"
-import { TrustSection } from "@/components/home/TrustSection"
-import { HomepageFAQ } from "@/components/home/HomepageFAQ"
 import { BottomCTASection } from "@/components/home/BottomCTASection"
 import { StickyMobileCTA } from "@/components/home/StickyMobileCTA"
 
@@ -34,8 +32,6 @@ export default function HomePage() {
       <FeaturedProductSection />
       <GiftOccasionsSection />
       <EmotionalSection />
-      <TrustSection />
-      <HomepageFAQ />
       <BottomCTASection />
       <StickyMobileCTA />
     </>
