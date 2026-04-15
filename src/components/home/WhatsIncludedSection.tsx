@@ -52,7 +52,7 @@ const includedItems: readonly IncludedItem[] = [
 export function WhatsIncludedSection() {
   return (
     <section
-      className="bg-muted/50 py-16 md:py-24"
+      className="bg-muted/50 py-14 md:py-16"
       aria-labelledby="whats-included-heading"
     >
       <div className="mx-auto max-w-6xl px-6 lg:px-8">

@@ -1,9 +1,3 @@
-const announcements = [
-  "✝ Guds ord gir lys ✝",
-  "✝ Gratis levering i hele Norge ✝",
-  "✝ 30 dagers åpent kjøp ✝",
-]
-
 export function AnnouncementBar() {
   return (
     <div
@@ -11,14 +5,7 @@ export function AnnouncementBar() {
       role="banner"
       aria-label="Tilbudsinformasjon"
     >
-      <p className="font-medium">
-        {announcements[0]}
-        <span className="hidden sm:inline">
-          {" "}
-          &nbsp;·&nbsp; {announcements[1]}
-          &nbsp;·&nbsp; {announcements[2]}
-        </span>
-      </p>
+      <p className="font-medium">✝ Guds ord gir lys ✝</p>
     </div>
   )
 }
