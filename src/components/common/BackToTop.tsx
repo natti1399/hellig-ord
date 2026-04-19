@@ -34,11 +34,12 @@ export function BackToTop() {
           whileHover={{ scale: 1.08 }}
           whileTap={{ scale: 0.92 }}
           className="
+            hidden
+            md:flex
             fixed
             bottom-6
             right-6
             z-50
-            flex
             size-12
             items-center
             justify-center
