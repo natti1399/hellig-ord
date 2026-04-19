@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Playfair_Display, Montserrat } from "next/font/google";
 import "./globals.css";
+import OrganizationJsonLd from "@/components/seo/OrganizationJsonLd";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -51,6 +52,7 @@ export const metadata: Metadata = {
     title: "Hellig Ord – Ord for hjertet",
     description:
       "Vakre kristne produkter som inspirerer troen din. Bibelvers, gaver og mer.",
+    images: [{ url: "/og-default.jpg", width: 1200, height: 630 }],
   },
 };
 
@@ -67,6 +69,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <SkipToContent />
         <Providers>
+          <OrganizationJsonLd />
           <MetaPixel />
           <AnnouncementBar />
           <Header />

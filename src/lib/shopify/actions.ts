@@ -1,5 +1,7 @@
 "use server"
 
+import { cache } from "react"
+import { unstable_cache } from "next/cache"
 import { storefrontClient } from "./client"
 import {
   GET_PRODUCTS,
@@ -18,6 +20,7 @@ import type {
   Cart,
   CartItem,
 } from "./types"
+import { MOCK_PRODUCTS, MOCK_CART } from "./mock"
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -60,103 +63,17 @@ function normaliseCart(cart: ShopifyCart): Cart {
 }
 
 // ---------------------------------------------------------------------------
-// Mock data — returned when Shopify env vars are not configured
+// ISR-cached fetchers (network layer with 1-hour revalidation)
+// These are separate from the React.cache wrappers so unstable_cache runs
+// once per build/revalidation window, while React.cache deduplicates within
+// a single render pass.
 // ---------------------------------------------------------------------------
 
-const MOCK_PRODUCTS: ShopifyProduct[] = [
-  {
-    id: "gid://shopify/Product/1",
-    title: "Bibelvers plakat – Filipperne 4:13",
-    handle: "bibelvers-plakat-filiperne-4-13",
-    description:
-      "En vakker håndlaget plakat med det oppmuntrende verset fra Filipperne 4:13.",
-    priceRange: {
-      minVariantPrice: { amount: "249.00", currencyCode: "NOK" },
-      maxVariantPrice: { amount: "249.00", currencyCode: "NOK" },
-    },
-    images: { edges: [] },
-    variants: {
-      edges: [
-        {
-          node: {
-            id: "gid://shopify/ProductVariant/1",
-            title: "Standard",
-            availableForSale: true,
-            price: { amount: "249.00", currencyCode: "NOK" },
-          },
-        },
-      ],
-    },
-  },
-  {
-    id: "gid://shopify/Product/2",
-    title: "Kristen krus – Guds nåde",
-    handle: "kristen-krus-guds-naade",
-    description: "Varm dine hender og ditt hjerte med dette inspirerende kruset.",
-    priceRange: {
-      minVariantPrice: { amount: "179.00", currencyCode: "NOK" },
-      maxVariantPrice: { amount: "179.00", currencyCode: "NOK" },
-    },
-    images: { edges: [] },
-    variants: {
-      edges: [
-        {
-          node: {
-            id: "gid://shopify/ProductVariant/2",
-            title: "Standard",
-            availableForSale: true,
-            price: { amount: "179.00", currencyCode: "NOK" },
-          },
-        },
-      ],
-    },
-  },
-  {
-    id: "gid://shopify/Product/3",
-    title: "Trefigur – Krossen",
-    handle: "trefigur-krossen",
-    description: "Håndlaget trefigur som minner oss om Guds kjærlighet.",
-    priceRange: {
-      minVariantPrice: { amount: "349.00", currencyCode: "NOK" },
-      maxVariantPrice: { amount: "349.00", currencyCode: "NOK" },
-    },
-    images: { edges: [] },
-    variants: {
-      edges: [
-        {
-          node: {
-            id: "gid://shopify/ProductVariant/3",
-            title: "Standard",
-            availableForSale: true,
-            price: { amount: "349.00", currencyCode: "NOK" },
-          },
-        },
-      ],
-    },
-  },
-]
+const fetchProductsCached = unstable_cache(
+  async (): Promise<ShopifyProduct[]> => {
+    if (!storefrontClient) return MOCK_PRODUCTS
 
-const MOCK_CART: Cart = {
-  id: "mock-cart-id",
-  checkoutUrl: "#",
-  totalQuantity: 0,
-  subtotal: "0.00",
-  total: "0.00",
-  currencyCode: "NOK",
-  items: [],
-}
-
-// ---------------------------------------------------------------------------
-// Server actions
-// ---------------------------------------------------------------------------
-
-export async function getProducts(): Promise<ShopifyProduct[]> {
-  if (!isShopifyConfigured()) {
-    return MOCK_PRODUCTS
-  }
-
-  try {
-    const { data, errors } = await storefrontClient!.request(GET_PRODUCTS, {
+    const { data, errors } = await storefrontClient.request(GET_PRODUCTS, {
       variables: { first: 20 },
     })
 
@@ -172,21 +89,18 @@ export async function getProducts(): Promise<ShopifyProduct[]> {
         }
       )?.products?.edges?.map((e) => e.node) ?? MOCK_PRODUCTS
     )
-  } catch (err) {
-    console.error("[Shopify] getProducts failed:", err)
-    return MOCK_PRODUCTS
-  }
-}
+  },
+  ["shopify-products"],
+  { revalidate: 3600, tags: ["products"] }
+)
 
-export async function getProductByHandle(
-  handle: string
-): Promise<ShopifyProduct | null> {
-  if (!isShopifyConfigured()) {
-    return MOCK_PRODUCTS.find((p) => p.handle === handle) ?? MOCK_PRODUCTS[0]
-  }
+const fetchProductByHandleCached = unstable_cache(
+  async (handle: string): Promise<ShopifyProduct | null> => {
+    if (!storefrontClient) {
+      return MOCK_PRODUCTS.find((p) => p.handle === handle) ?? MOCK_PRODUCTS[0]
+    }
 
-  try {
-    const { data, errors } = await storefrontClient!.request(
+    const { data, errors } = await storefrontClient.request(
       GET_PRODUCT_BY_HANDLE,
       { variables: { handle } }
     )
@@ -197,19 +111,50 @@ export async function getProductByHandle(
     }
 
     return (data as { product: ShopifyProduct })?.product ?? null
+  },
+  ["shopify-product-by-handle"],
+  { revalidate: 3600, tags: ["products"] }
+)
+
+// ---------------------------------------------------------------------------
+// Server actions — React.cache wraps for per-request deduplication
+// ---------------------------------------------------------------------------
+
+export const getProducts: () => Promise<ShopifyProduct[]> = cache(async () => {
+  if (!isShopifyConfigured()) return MOCK_PRODUCTS
+
+  try {
+    return await fetchProductsCached()
+  } catch (err) {
+    console.error("[Shopify] getProducts failed:", err)
+    return MOCK_PRODUCTS
+  }
+})
+
+export const getProductByHandle: (
+  handle: string
+) => Promise<ShopifyProduct | null> = cache(async (handle: string) => {
+  if (!isShopifyConfigured()) {
+    return MOCK_PRODUCTS.find((p) => p.handle === handle) ?? MOCK_PRODUCTS[0]
+  }
+
+  try {
+    return await fetchProductByHandleCached(handle)
   } catch (err) {
     console.error("[Shopify] getProductByHandle failed:", err)
     return null
   }
-}
+})
 
 export async function getCollections(): Promise<ShopifyCollection[]> {
   if (!isShopifyConfigured()) {
     return []
   }
 
+  if (!storefrontClient) return []
+
   try {
-    const { data, errors } = await storefrontClient!.request(GET_COLLECTIONS, {
+    const { data, errors } = await storefrontClient.request(GET_COLLECTIONS, {
       variables: { first: 10 },
     })
 
@@ -236,8 +181,10 @@ export async function createCart(): Promise<Cart> {
     return { ...MOCK_CART, id: `mock-${Date.now()}` }
   }
 
+  if (!storefrontClient) return { ...MOCK_CART, id: `mock-${Date.now()}` }
+
   try {
-    const { data, errors } = await storefrontClient!.request(CREATE_CART, {
+    const { data, errors } = await storefrontClient.request(CREATE_CART, {
       variables: { input: {} },
     })
 
@@ -266,8 +213,10 @@ export async function addToCart(
     return { ...MOCK_CART, id: cartId }
   }
 
+  if (!storefrontClient) return { ...MOCK_CART, id: cartId }
+
   try {
-    const { data, errors } = await storefrontClient!.request(ADD_TO_CART, {
+    const { data, errors } = await storefrontClient.request(ADD_TO_CART, {
       variables: {
         cartId,
         lines: [{ merchandiseId: variantId, quantity }],
@@ -299,8 +248,10 @@ export async function updateCart(
     return { ...MOCK_CART, id: cartId }
   }
 
+  if (!storefrontClient) return { ...MOCK_CART, id: cartId }
+
   try {
-    const { data, errors } = await storefrontClient!.request(UPDATE_CART, {
+    const { data, errors } = await storefrontClient.request(UPDATE_CART, {
       variables: {
         cartId,
         lines: [{ id: lineId, quantity }],
@@ -332,8 +283,10 @@ export async function removeFromCart(
     return { ...MOCK_CART, id: cartId }
   }
 
+  if (!storefrontClient) return { ...MOCK_CART, id: cartId }
+
   try {
-    const { data, errors } = await storefrontClient!.request(REMOVE_FROM_CART, {
+    const { data, errors } = await storefrontClient.request(REMOVE_FROM_CART, {
       variables: { cartId, lineIds: [lineId] },
     })
 
@@ -359,8 +312,10 @@ export async function getCart(cartId: string): Promise<Cart | null> {
     return null
   }
 
+  if (!storefrontClient) return null
+
   try {
-    const { data, errors } = await storefrontClient!.request(GET_CART, {
+    const { data, errors } = await storefrontClient.request(GET_CART, {
       variables: { cartId },
     })
 

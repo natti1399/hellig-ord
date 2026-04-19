@@ -7,6 +7,7 @@ import { getProductContent } from "@/data/product-content"
 import { ProductDetailClient } from "@/components/product/ProductDetailClient"
 import { ProductAccordion } from "@/components/product/ProductAccordion"
 import { ProductImageGallery } from "@/components/product/ProductImageGallery"
+import ProductJsonLd from "@/components/seo/ProductJsonLd"
 import type { Product } from "@/types/product"
 
 interface ShopifyProduct {
@@ -61,12 +62,26 @@ export async function generateMetadata({
   const raw = await fetchProduct(handle)
   if (!raw) return { title: "Produkt ikke funnet" }
 
+  const firstImage = raw.images.edges[0]?.node
+
   return {
     title: raw.title,
     description: raw.description.slice(0, 155),
     openGraph: {
       title: `${raw.title} | Hellig Ord`,
       description: raw.description.slice(0, 155),
+      ...(firstImage
+        ? {
+            images: [
+              {
+                url: firstImage.url,
+                width: 1200,
+                height: 630,
+                alt: raw.title,
+              },
+            ],
+          }
+        : {}),
     },
   }
 }
@@ -83,8 +98,22 @@ export default async function ProductPage({
   const product = mapToProduct(raw)
   const content = getProductContent(handle)
 
+  const firstImage = product.images[0]
+  const priceAmount = parseFloat(product.priceRange.minVariantPrice.amount)
+  const currency = product.priceRange.minVariantPrice.currencyCode
+  const imageUrls = product.images.map((img) => img.url)
+
   return (
-    <main className="flex-1">
+    <div className="flex-1">
+      <ProductJsonLd
+        name={product.title}
+        description={product.description}
+        image={imageUrls.length > 0 ? imageUrls : (firstImage?.url ?? "")}
+        price={priceAmount}
+        currency={currency}
+        sku={handle}
+        url={`https://helligeord.no/produkter/${handle}`}
+      />
       {/* Breadcrumb */}
       <nav
         aria-label="Brødsmule-navigasjon"
@@ -169,6 +198,6 @@ export default async function ProductPage({
           </div>
         </div>
       </section>
-    </main>
+    </div>
   )
 }

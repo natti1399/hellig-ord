@@ -9,6 +9,7 @@ import {
   useRef,
   type ReactNode,
 } from "react"
+import { toast } from "sonner"
 import {
   createCart,
   addToCart,
@@ -47,7 +48,7 @@ interface CartContextValue {
   loading: boolean
   mutating: boolean
   error: string | null
-  addItem: (variantId: string, quantity?: number) => Promise<void>
+  addItem: (variantId: string, quantity?: number) => Promise<Cart | null>
   removeItem: (lineId: string) => Promise<void>
   updateQuantity: (lineId: string, quantity: number) => Promise<void>
   clearCart: () => void
@@ -135,7 +136,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
       })
       .catch((err: unknown) => {
         console.error("[CartContext] Failed to restore cart:", err)
-        localStorage.removeItem(CART_STORAGE_KEY)
+        // Only purge the stored cart if the cart is definitively gone (e.g.
+        // CART_NOT_FOUND from Shopify). On network/timeout errors we keep the
+        // cartId so the user's cart survives a momentary connectivity blip.
+        const isDefinitelyGone =
+          err instanceof Error &&
+          (err.message.includes("CART_NOT_FOUND") ||
+            err.message.includes("not found"))
+        if (isDefinitelyGone) {
+          localStorage.removeItem(CART_STORAGE_KEY)
+        } else {
+          dispatch({ type: "SET_ERROR", payload: "Kunne ikke laste handlekurven" })
+        }
       })
       .finally(() => {
         dispatch({ type: "SET_LOADING", payload: false })
@@ -151,6 +163,13 @@ export function CartProvider({ children }: { children: ReactNode }) {
       localStorage.removeItem(CART_STORAGE_KEY)
     }
   }, [state.cartId])
+
+  // Show a toast whenever an error is set, then clear it
+  useEffect(() => {
+    if (!state.error) return
+    toast.error(state.error, { duration: 4000, position: "bottom-right" })
+    dispatch({ type: "SET_ERROR", payload: null })
+  }, [state.error])
 
   // ------------------------------------------------------------------
   // Ensure a cart exists, creating one if necessary
@@ -170,7 +189,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   // addItem
   // ------------------------------------------------------------------
   const addItem = useCallback(
-    async (variantId: string, quantity = 1) => {
+    async (variantId: string, quantity = 1): Promise<Cart | null> => {
       dispatch({ type: "SET_MUTATING", payload: true })
       dispatch({ type: "SET_ERROR", payload: null })
 
@@ -181,12 +200,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
           type: "SET_CART",
           payload: { cartId: updatedCart.id, cart: updatedCart },
         })
+        return updatedCart
       } catch (err: unknown) {
         const message =
           err instanceof Error
             ? err.message
             : "Kunne ikke legge til i handlekurv"
         dispatch({ type: "SET_ERROR", payload: message })
+        throw err
       } finally {
         dispatch({ type: "SET_MUTATING", payload: false })
       }

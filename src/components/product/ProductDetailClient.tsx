@@ -55,7 +55,7 @@ const TRUST_CARDS = [
   },
   {
     icon: Heart,
-    title: "Fornøydgaranti",
+    title: "Tilfredshetsgaranti",
     desc: "Vi stiller opp for deg",
   },
 ] as const
@@ -100,17 +100,25 @@ export function ProductDetailClient({ product, content: _content }: ProductDetai
 
   async function handleAddToCart() {
     if (!selectedVariantId) return
-    await addItem(selectedVariantId, quantity)
-    setAddedToCart(true)
-    setTimeout(() => setAddedToCart(false), 2500)
-    showAddToCartToast({
-      productName: product.title,
-      productImage: product.images[0]?.url,
-      variantTitle:
-        selectedVariant && product.variants.length > 1
-          ? selectedVariant.title
-          : undefined,
-    })
+    try {
+      await addItem(selectedVariantId, quantity)
+      setAddedToCart(true)
+      setTimeout(() => setAddedToCart(false), 2500)
+      showAddToCartToast({
+        productName: product.title,
+        productImage: product.images[0]?.url,
+        variantTitle:
+          selectedVariant && product.variants.length > 1
+            ? selectedVariant.title
+            : undefined,
+      })
+    } catch (err: unknown) {
+      console.error("[ProductDetailClient] handleAddToCart failed:", err)
+      showAddToCartToast({
+        productName: "Feil",
+        variantTitle: "Kunne ikke legge til i handlekurv. Prøv igjen.",
+      })
+    }
   }
 
   return (

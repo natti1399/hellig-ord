@@ -46,7 +46,7 @@ export function ProductImageGallery({
       <div className="relative aspect-square w-full rounded-2xl bg-background overflow-hidden border border-border">
         <Image
           src={activeImage.url}
-          alt={activeImage.altText ?? productTitle}
+          alt={activeImage.altText ?? `${productTitle} – kristen gave fra Hellig Ord`}
           fill
           className="object-contain p-4 mix-blend-multiply"
           sizes="(max-width: 1024px) 100vw, 50vw"
@@ -62,7 +62,7 @@ export function ProductImageGallery({
               aria-label="Forrige bilde"
               className="absolute left-2 top-1/2 -translate-y-1/2 flex size-10 items-center justify-center rounded-full bg-white/80 text-foreground shadow-sm backdrop-blur-sm transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
             </button>
             <button
               type="button"
@@ -70,7 +70,7 @@ export function ProductImageGallery({
               aria-label="Neste bilde"
               className="absolute right-2 top-1/2 -translate-y-1/2 flex size-10 items-center justify-center rounded-full bg-white/80 text-foreground shadow-sm backdrop-blur-sm transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+              <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
             </button>
           </>
         )}

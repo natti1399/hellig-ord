@@ -23,15 +23,21 @@ function DescriptionBlock({ block }: { block: ProductDescriptionBlock }) {
           {block.heading}
         </p>
       )}
-      {paragraphs.map((para, i) => (
-        <p key={i} className="font-sans text-sm text-muted-foreground leading-relaxed mb-1.5 last:mb-0">
+      {paragraphs.map((para) => (
+        <p
+          key={para.slice(0, 48)}
+          className="font-sans text-sm text-muted-foreground leading-relaxed mb-1.5 last:mb-0"
+        >
           {para}
         </p>
       ))}
       {block.bullets && block.bullets.length > 0 && (
         <ul className="mt-2 space-y-1.5 pl-1">
-          {block.bullets.map((bullet, i) => (
-            <li key={i} className="flex items-start gap-2 font-sans text-sm text-muted-foreground leading-relaxed">
+          {block.bullets.map((bullet) => (
+            <li
+              key={bullet.slice(0, 48)}
+              className="flex items-start gap-2 font-sans text-sm text-muted-foreground leading-relaxed"
+            >
               <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
               {bullet}
             </li>
@@ -44,8 +50,12 @@ function DescriptionBlock({ block }: { block: ProductDescriptionBlock }) {
 
 export function ProductAccordion({ content }: ProductAccordionProps) {
   return (
-    <Accordion multiple className="divide-y divide-border border-t border-border">
-      {/* 1 — Beskrivelse */}
+    <Accordion
+      multiple
+      defaultValue={["beskrivelse"]}
+      className="divide-y divide-border border-t border-border"
+    >
+      {/* 1 — Beskrivelse (open by default so the reader sees story, not 4 closed tabs) */}
       <AccordionItem value="beskrivelse">
         <AccordionTrigger className="group flex w-full items-center gap-3 py-4 font-sans text-sm font-semibold text-foreground hover:no-underline focus-visible:outline-none">
           <FileText className="size-4 shrink-0 text-accent" aria-hidden />
@@ -53,8 +63,11 @@ export function ProductAccordion({ content }: ProductAccordionProps) {
         </AccordionTrigger>
         <AccordionContent>
           <div className="pb-4 pt-1">
-            {content.description.map((block, i) => (
-              <DescriptionBlock key={i} block={block} />
+            {content.description.map((block) => (
+              <DescriptionBlock
+                key={block.heading ?? block.body?.slice(0, 48) ?? "block"}
+                block={block}
+              />
             ))}
           </div>
         </AccordionContent>
@@ -82,8 +95,11 @@ export function ProductAccordion({ content }: ProductAccordionProps) {
         <AccordionContent>
           <div className="pb-4 pt-1">
             <ul className="space-y-1.5">
-              {content.specs.map((spec, i) => (
-                <li key={i} className="flex items-start gap-2 font-sans text-sm text-muted-foreground">
+              {content.specs.map((spec) => (
+                <li
+                  key={spec.slice(0, 48)}
+                  className="flex items-start gap-2 font-sans text-sm text-muted-foreground"
+                >
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
                   {spec}
                 </li>
@@ -106,8 +122,11 @@ export function ProductAccordion({ content }: ProductAccordionProps) {
         </AccordionTrigger>
         <AccordionContent>
           <ul className="space-y-1.5 pb-4 pt-1">
-            {content.care.map((item, i) => (
-              <li key={i} className="flex items-start gap-2 font-sans text-sm text-muted-foreground">
+            {content.care.map((item) => (
+              <li
+                key={item.slice(0, 48)}
+                className="flex items-start gap-2 font-sans text-sm text-muted-foreground"
+              >
                 <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
                 {item}
               </li>

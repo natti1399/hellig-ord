@@ -16,6 +16,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { useCart } from "@/context/CartContext"
 import type { CartItem } from "@/lib/shopify/types"
+import { isAllowedCheckoutUrl } from "@/lib/shopify/checkout"
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -250,7 +251,7 @@ function OrderSummary({ subtotal, checkoutUrl, mutating }: OrderSummaryProps) {
       </div>
 
       <a
-        href={checkoutUrl ?? "#"}
+        href={checkoutUrl && isAllowedCheckoutUrl(checkoutUrl) ? checkoutUrl : "#"}
         target="_blank"
         rel="noopener noreferrer"
         className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-md bg-accent text-accent-foreground text-sm font-semibold hover:bg-accent/90 transition-colors"

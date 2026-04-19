@@ -74,7 +74,7 @@ export function HeroSection() {
                 href={PRODUCT_URL}
                 className="inline-flex h-14 items-center justify-center rounded-full bg-primary px-10 text-base font-semibold tracking-wide text-primary-foreground shadow-lg shadow-primary/20 transition-all duration-300 hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
-                Utforsk krukken
+                Utforsk alle produkter
               </Link>
             </motion.div>
           </div>

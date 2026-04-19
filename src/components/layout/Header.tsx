@@ -33,7 +33,11 @@ function NavItem({ href, label }: NavLink) {
   const isActive = pathname === href
 
   return (
-    <Link href={href} className="relative group flex items-center">
+    <Link
+      href={href}
+      className="relative group flex items-center"
+      aria-current={isActive ? "page" : undefined}
+    >
       <motion.span
         className={cn(
           "text-sm font-medium tracking-wide transition-colors duration-200",
@@ -65,9 +69,13 @@ function CartButton({ itemCount = 0 }: { itemCount?: number }) {
         whileTap={{ scale: 0.95 }}
         transition={{ type: "spring", stiffness: 400, damping: 25 }}
       >
-        <ShoppingBag className="size-5" />
+        <ShoppingBag className="size-5" aria-hidden />
         {itemCount > 0 && (
-          <span className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-semibold leading-none">
+          <span
+            aria-live="polite"
+            aria-atomic="true"
+            className="absolute -top-0.5 -right-0.5 flex size-4 items-center justify-center rounded-full bg-primary text-primary-foreground text-[10px] font-semibold leading-none"
+          >
             {itemCount > 9 ? "9+" : itemCount}
           </span>
         )}
@@ -132,7 +140,7 @@ export function Header() {
               className="md:hidden inline-flex items-center justify-center size-11 rounded-lg text-foreground/70 hover:text-foreground hover:bg-muted transition-colors"
               aria-label="Åpne meny"
             >
-              <Menu className="size-5" />
+              <Menu className="size-5" aria-hidden />
             </button>
             <SheetContent side="right" className="w-full max-w-xs p-0">
               <SheetHeader className="p-6 pb-4 border-b border-border/50">
@@ -161,7 +169,7 @@ export function Header() {
                   onClick={() => setMobileOpen(false)}
                   className="flex items-center gap-3 w-full rounded-lg bg-primary px-4 py-3 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors duration-200"
                 >
-                  <ShoppingBag className="size-4" />
+                  <ShoppingBag className="size-4" aria-hidden />
                   Handlekurv
                 </Link>
               </div>

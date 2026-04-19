@@ -1,21 +1,9 @@
 import type { MetadataRoute } from 'next'
+import { getProducts } from '@/lib/shopify/actions'
 
 const BASE_URL = 'https://helligeord.no'
 
-const mockProductHandles = [
-  'bibelvers-plakat-guds-naade',
-  'trekors-halskjede-sølv',
-  'kristne-gaveesker-sett',
-  'lovsang-notatbok',
-  'bønnebok-innbundet',
-  'bibelsitat-veggdekor',
-  'kristen-kopp-med-vers',
-  'advent-lysestake',
-  'dåpsgave-sølvramme',
-  'konfirmasjonsbibel-innbundet',
-]
-
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticRoutes: MetadataRoute.Sitemap = [
     {
       url: BASE_URL,
@@ -47,16 +35,39 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly',
       priority: 0.5,
     },
+    {
+      url: `${BASE_URL}/vilkar`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.4,
+    },
+    {
+      url: `${BASE_URL}/personvern`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.4,
+    },
+    {
+      url: `${BASE_URL}/frakt-og-retur`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.4,
+    },
+    {
+      url: `${BASE_URL}/informasjonskapsler`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.3,
+    },
   ]
 
-  const productRoutes: MetadataRoute.Sitemap = mockProductHandles.map(
-    (handle) => ({
-      url: `${BASE_URL}/produkter/${handle}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly' as const,
-      priority: 0.8,
-    })
-  )
+  const products = await getProducts()
+  const productRoutes: MetadataRoute.Sitemap = products.map((p) => ({
+    url: `${BASE_URL}/produkter/${p.handle}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly' as const,
+    priority: 0.8,
+  }))
 
   return [...staticRoutes, ...productRoutes]
 }

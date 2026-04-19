@@ -10,6 +10,8 @@ import type { Product } from "@/types/product"
 import { getProductContent } from "@/data/product-content"
 import { useCart } from "@/context/CartContext"
 import { formatPrice } from "@/lib/mock-data"
+import { showAddToCartToast } from "@/components/notifications/AddToCartToast"
+import { isAllowedCheckoutUrl } from "@/lib/shopify/checkout"
 
 interface ProductCardProps {
   product: Product
@@ -37,15 +39,19 @@ export function ProductCard({ product }: ProductCardProps) {
     if (!firstAvailableVariant) return
     setAdding(true)
     try {
-      await addItem(firstAvailableVariant.id, 1)
-      // After addItem resolves, cart state is updated — read checkoutUrl
-      const checkoutUrl = cart?.checkoutUrl
-      if (checkoutUrl && checkoutUrl !== "#") {
+      const updatedCart = await addItem(firstAvailableVariant.id, 1)
+      const checkoutUrl = updatedCart?.checkoutUrl
+      if (checkoutUrl && isAllowedCheckoutUrl(checkoutUrl)) {
         window.location.href = checkoutUrl
       } else {
         router.push("/handlekurv")
       }
-    } catch {
+    } catch (err: unknown) {
+      console.error("[ProductCard] handleBuyNow failed:", err)
+      showAddToCartToast({
+        productName: "Feil",
+        variantTitle: "Kunne ikke starte kjøp. Prøv igjen.",
+      })
       router.push("/handlekurv")
     } finally {
       setAdding(false)
@@ -69,7 +75,7 @@ export function ProductCard({ product }: ProductCardProps) {
           {product.images[0]?.url ? (
             <Image
               src={product.images[0].url}
-              alt={product.images[0].altText ?? product.title}
+              alt={product.images[0].altText ?? `${product.title} – kristen gave fra Hellig Ord`}
               fill
               className="object-contain p-6 mix-blend-multiply transition-transform duration-300 group-hover:scale-[1.03]"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
@@ -122,7 +128,7 @@ export function ProductCard({ product }: ProductCardProps) {
           {product.images[0]?.url ? (
             <Image
               src={product.images[0].url}
-              alt={product.images[0].altText ?? product.title}
+              alt={product.images[0].altText ?? `${product.title} – kristen gave fra Hellig Ord`}
               fill
               className="object-contain p-6 mix-blend-multiply transition-transform duration-300 group-hover:scale-[1.03]"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

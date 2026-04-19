@@ -4,13 +4,13 @@ import { ProductGrid } from "@/components/product/ProductGrid"
 import type { Product } from "@/types/product"
 
 export const metadata: Metadata = {
-  title: "Våre produkter",
+  title: "Kristne gaver og bibelvers produkter",
   description:
-    "Håndplukket med omtanke – vakre kristne gaver som gir ro, håp og trøst i hverdagen. Utforsk bibelvers, smykker, dagbøker og mer.",
+    "Håndplukket med omtanke – bibelvers krukker, kristne gaver og mer. Gratis frakt i hele Norge. Finn den perfekte gaven til dåp, bursdag eller hverdagen.",
   openGraph: {
-    title: "Våre produkter | Hellig Ord",
+    title: "Kristne gaver og bibelvers produkter | Hellig Ord",
     description:
-      "Håndplukket med omtanke – vakre kristne gaver som gir ro, håp og trøst i hverdagen.",
+      "Håndplukket med omtanke – bibelvers krukker, kristne gaver og mer. Gratis frakt i hele Norge.",
   },
 }
 
@@ -55,7 +55,7 @@ export default async function ProdukterPage() {
   const products = shopifyProducts.map(mapShopifyProduct)
 
   return (
-    <main className="flex-1">
+    <div className="flex-1">
       {/* Hero section */}
       <section
         className="border-b"
@@ -115,6 +115,6 @@ export default async function ProdukterPage() {
           </ul>
         </div>
       </section>
-    </main>
+    </div>
   )
 }
