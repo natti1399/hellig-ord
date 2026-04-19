@@ -1,9 +1,11 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ChevronRightIcon } from "lucide-react"
+import { ChevronRightIcon, Star } from "lucide-react"
 import { getProducts, getProductByHandle as fetchProduct } from "@/lib/shopify/actions"
+import { getProductContent } from "@/data/product-content"
 import { ProductDetailClient } from "@/components/product/ProductDetailClient"
+import { ProductAccordion } from "@/components/product/ProductAccordion"
 import { ProductImageGallery } from "@/components/product/ProductImageGallery"
 import type { Product } from "@/types/product"
 
@@ -79,6 +81,7 @@ export default async function ProductPage({
   if (!raw) notFound()
 
   const product = mapToProduct(raw)
+  const content = getProductContent(handle)
 
   return (
     <main className="flex-1">
@@ -122,26 +125,47 @@ export default async function ProductPage({
             productTitle={product.title}
           />
 
-          {/* Details */}
+          {/* Right column */}
           <div className="flex flex-col gap-5">
             {/* Title */}
             <h1 className="font-heading text-3xl font-bold leading-tight tracking-wide text-foreground sm:text-4xl">
               {product.title}
             </h1>
 
-            <div className="flex flex-col gap-1.5 mt-1">
-              <span className="text-sm font-medium text-foreground">💛 Gir ro i hverdagen</span>
-              <span className="text-sm font-medium text-foreground">🙏 Gir trøst og styrke</span>
-              <span className="text-sm font-medium text-foreground">🎁 En gave med ekte mening</span>
+            {/* Star row */}
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-0.5" aria-label="5 av 5 stjerner">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star
+                    key={i}
+                    className="size-4 fill-accent text-accent"
+                    aria-hidden
+                  />
+                ))}
+              </div>
+              <span className="font-heading text-sm italic text-muted-foreground">
+                (5 anmeldelser)
+              </span>
             </div>
 
-            <p className="font-sans text-base leading-relaxed text-muted-foreground">
-              {product.description.slice(0, 250)}
-              {product.description.length > 250 ? "…" : ""}
-            </p>
+            {/* Hook line */}
+            {content && (
+              <p className="font-heading text-base italic text-foreground/80 leading-snug">
+                {content.hook}
+              </p>
+            )}
 
-            {/* Interactive area: variants, quantity, CTA, accordion */}
-            <ProductDetailClient product={product} />
+            {/* Accordion — only when content is available */}
+            {content ? (
+              <ProductAccordion content={content} />
+            ) : (
+              <p className="font-sans text-base leading-relaxed text-muted-foreground">
+                {product.description}
+              </p>
+            )}
+
+            {/* Interactive area: price, variants, quantity, CTA, trust */}
+            <ProductDetailClient product={product} content={content} />
           </div>
         </div>
       </section>

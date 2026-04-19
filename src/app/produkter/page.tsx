@@ -4,13 +4,13 @@ import { ProductGrid } from "@/components/product/ProductGrid"
 import type { Product } from "@/types/product"
 
 export const metadata: Metadata = {
-  title: "Alle produkter",
+  title: "Våre produkter",
   description:
-    "Utforsk vårt utvalg av vakre kristne gaver — bibelvers, smykker, dagbøker og mer. Skapt med kjærlighet for å berike troen din.",
+    "Håndplukket med omtanke – vakre kristne gaver som gir ro, håp og trøst i hverdagen. Utforsk bibelvers, smykker, dagbøker og mer.",
   openGraph: {
-    title: "Alle produkter | Hellig Ord",
+    title: "Våre produkter | Hellig Ord",
     description:
-      "Utforsk vårt utvalg av vakre kristne gaver — bibelvers, smykker, dagbøker og mer.",
+      "Håndplukket med omtanke – vakre kristne gaver som gir ro, håp og trøst i hverdagen.",
   },
 }
 
@@ -57,15 +57,25 @@ export default async function ProdukterPage() {
   return (
     <main className="flex-1">
       {/* Hero section */}
-      <section className="bg-muted border-b border-border">
-        <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
+      <section
+        className="border-b"
+        style={{ backgroundColor: "#F7F4EF", borderColor: "#e8e2db" }}
+      >
+        <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 sm:py-18 lg:px-8">
           <div className="mx-auto max-w-2xl text-center">
-            <h1 className="font-heading text-4xl font-bold tracking-wide text-foreground sm:text-5xl">
-              Alle produkter
+            <h1
+              className="font-heading text-4xl font-bold tracking-wide sm:text-5xl"
+              style={{ color: "#51304A" }}
+            >
+              Våre produkter
             </h1>
-            <p className="mt-4 font-sans text-base leading-relaxed text-muted-foreground sm:text-lg">
-              Utforsk vårt utvalg av vakre kristne gaver — skapt med kjærlighet
-              og omtanke for å berike troen din og glede de du er glad i.
+            {/* Decorative rule */}
+            <div className="mx-auto mt-5 mb-5 h-px w-16" style={{ backgroundColor: "#8AA29E" }} />
+            <p
+              className="font-sans text-base leading-relaxed sm:text-lg"
+              style={{ color: "#7a6a62" }}
+            >
+              Håndplukket med omtanke – små ting som gir ro, håp og trøst i hverdagen.
             </p>
           </div>
         </div>
@@ -73,12 +83,37 @@ export default async function ProdukterPage() {
 
       {/* Product grid */}
       <section className="mx-auto max-w-7xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
-        <div className="mb-8 flex items-center justify-between">
-          <p className="font-sans text-sm text-muted-foreground">
-            {products.length} {products.length === 1 ? "produkt" : "produkter"}
-          </p>
-        </div>
+        {products.length > 1 && (
+          <div className="mb-8 flex items-center justify-between">
+            <p className="font-sans text-sm text-muted-foreground">
+              {products.length} produkter
+            </p>
+          </div>
+        )}
         <ProductGrid products={products} />
+      </section>
+
+      {/* Trust strip */}
+      <section className="border-t" style={{ borderColor: "#e8e2db" }}>
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
+          <ul className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
+            {[
+              { icon: "✦", text: "Gratis frakt i hele Norge" },
+              { icon: "✦", text: "30 dagers åpent kjøp" },
+              { icon: "✦", text: "Sendes fra Norge" },
+              { icon: "✦", text: "Trygg betaling" },
+            ].map(({ icon, text }) => (
+              <li
+                key={text}
+                className="flex items-center gap-2 font-sans text-sm"
+                style={{ color: "#8AA29E" }}
+              >
+                <span className="text-xs" aria-hidden="true">{icon}</span>
+                <span style={{ color: "#7a6a62" }}>{text}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
     </main>
   )

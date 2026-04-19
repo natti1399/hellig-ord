@@ -2,23 +2,65 @@
 
 import { useState } from "react"
 import type { Product } from "@/types/product"
+import type { ProductContent } from "@/data/product-content"
 import { formatPrice } from "@/lib/mock-data"
 import { QuantitySelector } from "./QuantitySelector"
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "@/components/ui/accordion"
-import { ShoppingBagIcon, Gift, Truck, Flame, Clock, RotateCcw, MapPin } from "lucide-react"
+import { PaymentIcons } from "@/components/shared/PaymentIcons"
 import { useCart } from "@/context/CartContext"
 import { showAddToCartToast } from "@/components/notifications/AddToCartToast"
+import {
+  ShoppingBagIcon,
+  Truck,
+  RotateCcw,
+  ShieldCheck,
+  Heart,
+} from "lucide-react"
 
 interface ProductDetailClientProps {
   product: Product
+  content?: ProductContent | null
 }
 
-export function ProductDetailClient({ product }: ProductDetailClientProps) {
+/** Returns today + n business days (Mon–Fri). */
+function addBusinessDays(date: Date, days: number): Date {
+  const result = new Date(date)
+  let added = 0
+  while (added < days) {
+    result.setDate(result.getDate() + 1)
+    const dow = result.getDay()
+    if (dow !== 0 && dow !== 6) added++
+  }
+  return result
+}
+
+function formatNorwegian(date: Date): string {
+  return date.toLocaleDateString("nb-NO", { day: "numeric", month: "long" })
+}
+
+const TRUST_CARDS = [
+  {
+    icon: Truck,
+    title: "Gratis frakt",
+    desc: "Til hele Norge",
+  },
+  {
+    icon: RotateCcw,
+    title: "30 dagers retur",
+    desc: "Helt risikofritt",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Åpent kjøp",
+    desc: "Ingen spørsmål stilt",
+  },
+  {
+    icon: Heart,
+    title: "Fornøydgaranti",
+    desc: "Vi stiller opp for deg",
+  },
+] as const
+
+export function ProductDetailClient({ product, content: _content }: ProductDetailClientProps) {
   const { addItem, mutating } = useCart()
   const [selectedVariantId, setSelectedVariantId] = useState(
     product.variants[0]?.id ?? ""
@@ -42,14 +84,15 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
 
   const hasMultipleVariants = product.variants.length > 1
 
+  const today = new Date()
+  const deliveryStart = formatNorwegian(addBusinessDays(today, 5))
+  const deliveryEnd = formatNorwegian(addBusinessDays(today, 10))
+
   async function handleAddToCart() {
     if (!selectedVariantId) return
-
     await addItem(selectedVariantId, quantity)
-
     setAddedToCart(true)
     setTimeout(() => setAddedToCart(false), 2500)
-
     showAddToCartToast({
       productName: product.title,
       productImage: product.images[0]?.url,
@@ -61,22 +104,18 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
   }
 
   return (
-    <div className="flex flex-col gap-6">
+    <div className="flex flex-col gap-5">
       {/* Price */}
       <p className="font-heading text-3xl font-bold text-primary tracking-wide">
         {price}
       </p>
 
-      <div className="flex flex-wrap gap-x-5 gap-y-1.5">
-        <span className="flex items-center gap-1.5 font-sans text-sm text-muted-foreground">
-          <Gift className="size-3.5 text-accent" /> Perfekt gave
-        </span>
-        <span className="flex items-center gap-1.5 font-sans text-sm text-muted-foreground">
-          <Truck className="size-3.5 text-accent" /> Gratis frakt inkludert
-        </span>
-      </div>
+      {/* Trust sub-line */}
+      <p className="font-sans text-xs text-muted-foreground -mt-2">
+        Inkl. mva · Gratis frakt · Ingen abonnement
+      </p>
 
-      {/* Variant selector */}
+      {/* Variant chips */}
       {hasMultipleVariants && (
         <div className="flex flex-col gap-2">
           <p className="font-sans text-sm font-semibold text-foreground">
@@ -90,9 +129,9 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
                 onClick={() => setSelectedVariantId(variant.id)}
                 aria-pressed={variant.id === selectedVariantId}
                 className={[
-                  "rounded-lg border px-4 py-2 font-sans text-sm font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
+                  "rounded-full border px-4 py-1.5 font-sans text-sm font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
                   variant.id === selectedVariantId
-                    ? "border-primary bg-primary text-primary-foreground"
+                    ? "border-primary bg-primary text-primary-foreground shadow-sm"
                     : "border-border bg-background text-foreground hover:border-primary/50 hover:bg-muted",
                 ].join(" ")}
               >
@@ -109,10 +148,7 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         <QuantitySelector onChange={setQuantity} />
       </div>
 
-      <p className="text-center font-sans text-sm italic text-muted-foreground">
-        Når livet er tungt, kan ett lite vers gi ro.
-      </p>
-
+      {/* Add to cart */}
       <button
         type="button"
         onClick={handleAddToCart}
@@ -121,7 +157,11 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         className="flex w-full items-center justify-center gap-2.5 rounded-xl bg-accent py-4 font-sans text-sm font-semibold text-accent-foreground tracking-wide transition-all duration-200 hover:bg-accent/80 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-[0.98]"
       >
         <ShoppingBagIcon className="size-4" aria-hidden />
-        {mutating ? "Legger til..." : addedToCart ? "Lagt i handlekurven!" : "Legg i handlekurv"}
+        {mutating
+          ? "Legger til..."
+          : addedToCart
+          ? "Lagt i handlekurven!"
+          : "Legg i handlekurv"}
       </button>
 
       {!selectedVariant?.availableForSale && (
@@ -130,89 +170,35 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         </p>
       )}
 
-      <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1.5">
-        <span className="flex items-center gap-1.5 font-sans text-xs font-medium text-muted-foreground">
-          <Flame className="size-3.5 text-orange-500" /> Over 500 fornøyde kunder
-        </span>
-        <span className="flex items-center gap-1.5 font-sans text-xs font-medium text-accent">
-          <Clock className="size-3.5" /> Begrenset lager
-        </span>
+      {/* Payment icons */}
+      <div className="flex items-center justify-center">
+        <PaymentIcons size="md" />
       </div>
 
-      <div className="flex flex-col gap-2 rounded-xl border border-border bg-muted/30 p-4">
-        <div className="flex items-center gap-2 font-sans text-sm text-foreground">
-          <RotateCcw className="size-4 text-accent" />
-          <span>30 dagers åpent kjøp – helt risikofritt</span>
-        </div>
-        <div className="flex items-center gap-2 font-sans text-sm text-foreground">
-          <MapPin className="size-4 text-accent" />
-          <span>Sendes fra Norge</span>
-        </div>
-        <div className="flex items-center gap-2 font-sans text-sm text-foreground">
-          <Truck className="size-4 text-accent" />
-          <span>Rask levering</span>
-        </div>
-      </div>
+      {/* Delivery estimate */}
+      <p className="text-center font-sans text-xs text-muted-foreground">
+        Kjøp i dag – forventet levering{" "}
+        <span className="font-medium text-foreground">
+          {deliveryStart}–{deliveryEnd}
+        </span>
+      </p>
 
-      {/* Product details accordion */}
-      <div className="mt-2 border-t border-border pt-6">
-        <Accordion>
-          <AccordionItem value="produktdetaljer">
-            <AccordionTrigger className="font-sans text-sm font-semibold text-foreground py-4">
-              Produktdetaljer
-            </AccordionTrigger>
-            <AccordionContent>
-              <div className="font-sans text-sm text-muted-foreground leading-relaxed space-y-2 pb-2">
-                <p>{product.description}</p>
-                {product.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 pt-3">
-                    {product.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground capitalize"
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem value="frakt">
-            <AccordionTrigger className="font-sans text-sm font-semibold text-foreground py-4">
-              Frakt og levering
-            </AccordionTrigger>
-            <AccordionContent>
-              <div className="font-sans text-sm text-muted-foreground leading-relaxed space-y-2 pb-2">
-                <p>
-                  Gratis levering til hele Norge. Forventet leveringstid er ca. 10 dager.
-                </p>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-
-          <AccordionItem value="retur">
-            <AccordionTrigger className="font-sans text-sm font-semibold text-foreground py-4">
-              Returpolicy
-            </AccordionTrigger>
-            <AccordionContent>
-              <div className="font-sans text-sm text-muted-foreground leading-relaxed space-y-2 pb-2">
-                <p>
-                  Vi ønsker at du skal være helt fornøyd med ditt kjøp. Dersom
-                  du ikke er det, kan du returnere varen innen 30 dager fra
-                  mottaksdato.
-                </p>
-                <p>
-                  Varen må være i original emballasje og ubrukt tilstand. Ta
-                  kontakt med oss på hei@helligeord.no for å starte en
-                  retursak.
-                </p>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
+      {/* 2×2 trust cards */}
+      <div className="grid grid-cols-2 gap-3 mt-1">
+        {TRUST_CARDS.map(({ icon: Icon, title, desc }) => (
+          <div
+            key={title}
+            className="flex flex-col items-center gap-1.5 rounded-xl border border-border bg-background p-3 text-center"
+          >
+            <Icon className="size-5 text-accent" aria-hidden />
+            <p className="font-sans text-xs font-semibold text-foreground leading-snug">
+              {title}
+            </p>
+            <p className="font-sans text-xs text-muted-foreground leading-snug">
+              {desc}
+            </p>
+          </div>
+        ))}
       </div>
     </div>
   )
