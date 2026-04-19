@@ -65,13 +65,13 @@ export function ProductCard({ product }: ProductCardProps) {
         transition={{ duration: 0.22, ease: "easeOut" }}
         className="group flex flex-col rounded-2xl bg-card border border-border overflow-hidden"
       >
-        <div className="aspect-square bg-muted w-full relative overflow-hidden">
+        <div className="aspect-square bg-background w-full relative overflow-hidden">
           {product.images[0]?.url ? (
             <Image
               src={product.images[0].url}
               alt={product.images[0].altText ?? product.title}
               fill
-              className="object-contain p-6 transition-transform duration-300 group-hover:scale-[1.03]"
+              className="object-contain p-6 mix-blend-multiply transition-transform duration-300 group-hover:scale-[1.03]"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
           ) : (
@@ -118,13 +118,13 @@ export function ProductCard({ product }: ProductCardProps) {
         aria-label={`Se ${product.title}`}
         className="block"
       >
-        <div className="aspect-square bg-muted w-full relative overflow-hidden">
+        <div className="aspect-square bg-background w-full relative overflow-hidden">
           {product.images[0]?.url ? (
             <Image
               src={product.images[0].url}
               alt={product.images[0].altText ?? product.title}
               fill
-              className="object-contain p-6 transition-transform duration-300 group-hover:scale-[1.03]"
+              className="object-contain p-6 mix-blend-multiply transition-transform duration-300 group-hover:scale-[1.03]"
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
           ) : (

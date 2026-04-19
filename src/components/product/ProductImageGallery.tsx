@@ -41,13 +41,14 @@ export function ProductImageGallery({
 
   return (
     <div className="flex flex-col gap-3">
-      {/* Main image */}
-      <div className="relative aspect-square w-full rounded-2xl bg-muted overflow-hidden border border-border">
+      {/* Main image — bg matches the page cream and mix-blend-multiply makes
+          Shopify product-shot white backgrounds blend in seamlessly. */}
+      <div className="relative aspect-square w-full rounded-2xl bg-background overflow-hidden border border-border">
         <Image
           src={activeImage.url}
           alt={activeImage.altText ?? productTitle}
           fill
-          className="object-contain p-4"
+          className="object-contain p-4 mix-blend-multiply"
           sizes="(max-width: 1024px) 100vw, 50vw"
           priority
         />
@@ -97,7 +98,7 @@ export function ProductImageGallery({
                 src={image.url}
                 alt={image.altText ?? `${productTitle} bilde ${index + 1}`}
                 fill
-                className="object-contain p-1"
+                className="object-contain p-1 mix-blend-multiply"
                 sizes="64px"
               />
             </button>

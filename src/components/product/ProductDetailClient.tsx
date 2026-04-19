@@ -62,15 +62,25 @@ const TRUST_CARDS = [
 
 export function ProductDetailClient({ product, content: _content }: ProductDetailClientProps) {
   const { addItem, mutating } = useCart()
+
+  // Hide variants priced at 0 — those are half-configured placeholders in
+  // Shopify (e.g. a newly-added option without a real price). Showing them
+  // would let a customer check out for 0 kr.
+  const buyableVariants = product.variants.filter(
+    (v) => parseFloat(v.price.amount) > 0
+  )
+  const variantsToShow =
+    buyableVariants.length > 0 ? buyableVariants : product.variants
+
   const [selectedVariantId, setSelectedVariantId] = useState(
-    product.variants[0]?.id ?? ""
+    variantsToShow[0]?.id ?? ""
   )
   const [quantity, setQuantity] = useState(1)
   const [addedToCart, setAddedToCart] = useState(false)
 
   const selectedVariant =
-    product.variants.find((v) => v.id === selectedVariantId) ??
-    product.variants[0]
+    variantsToShow.find((v) => v.id === selectedVariantId) ??
+    variantsToShow[0]
 
   const price = selectedVariant
     ? formatPrice(
@@ -82,7 +92,7 @@ export function ProductDetailClient({ product, content: _content }: ProductDetai
         product.priceRange.minVariantPrice.currencyCode
       )
 
-  const hasMultipleVariants = product.variants.length > 1
+  const hasMultipleVariants = variantsToShow.length > 1
 
   const today = new Date()
   const deliveryStart = formatNorwegian(addBusinessDays(today, 5))
@@ -119,23 +129,27 @@ export function ProductDetailClient({ product, content: _content }: ProductDetai
       {hasMultipleVariants && (
         <div className="flex flex-col gap-2">
           <p className="font-sans text-sm font-semibold text-foreground">
-            {product.variants[0]?.selectedOptions[0]?.name ?? "Variant"}
+            {variantsToShow[0]?.selectedOptions[0]?.name ?? "Variant"}
           </p>
           <div className="flex flex-wrap gap-2">
-            {product.variants.map((variant) => (
+            {variantsToShow.map((variant) => (
               <button
                 key={variant.id}
                 type="button"
                 onClick={() => setSelectedVariantId(variant.id)}
                 aria-pressed={variant.id === selectedVariantId}
+                disabled={!variant.availableForSale}
                 className={[
-                  "rounded-full border px-4 py-1.5 font-sans text-sm font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
+                  "rounded-full border px-4 py-1.5 font-sans text-sm font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed",
                   variant.id === selectedVariantId
                     ? "border-primary bg-primary text-primary-foreground shadow-sm"
                     : "border-border bg-background text-foreground hover:border-primary/50 hover:bg-muted",
                 ].join(" ")}
               >
                 {variant.title}
+                {!variant.availableForSale && (
+                  <span className="ml-1.5 text-xs opacity-70">(utsolgt)</span>
+                )}
               </button>
             ))}
           </div>

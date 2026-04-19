@@ -129,6 +129,57 @@ const bibelversBokmerke: ProductContent = {
   ],
 }
 
+const kristenNokkelring: ProductContent = {
+  tagline: "Kristen nøkkelring – Salme 91:11",
+  hook: "En daglig påminnelse om tro og beskyttelse – bær ordet med deg hver dag.",
+  catalogBullets: [
+    "Inngravert bibelvers med sterk betydning (Salme 91:11)",
+    "Slitesterkt rustfritt stål – tåler hverdagsbruk",
+    "Lett og praktisk – plass på nøkler, vesker og sekker",
+    "Passer både menn, kvinner og barn",
+    "Vanntett og korrosjonsbestandig",
+    "Symbol på tro, beskyttelse og omsorg",
+    "Perfekt gave til kristne anledninger",
+  ],
+  description: [
+    {
+      heading: "Bær troen med deg",
+      body: "Bær med deg en daglig påminnelse om tro og beskyttelse med denne vakre kristne nøkkelringen med bibelvers. På forsiden er det inngravert det inspirerende verset:\n\n\u201CFor han skal gi sine englene befaling om å bevare deg på alle dine veier.\u201D\n– Salme 91:11",
+    },
+    {
+      heading: "💛 Mer enn et tilbehør",
+      body: "Denne nøkkelringen er mer enn bare et tilbehør – den er en symbolsk gave fylt med omsorg, bønn og kjærlighet. Perfekt som en personlig påminnelse eller som en meningsfull gave til noen du ønsker å velsigne.",
+    },
+    {
+      heading: "🎁 Perfekt gave til mange anledninger",
+      bullets: [
+        "Bursdag",
+        "Dåp og konfirmasjon",
+        "Første nattverd",
+        "Jul og påske",
+        "Valentinsdagen",
+        "Innflytningsfest",
+        "Menighetsgaver og arrangementer",
+      ],
+    },
+  ],
+  usage:
+    "Fest nøkkelringen til nøkkelknippet ditt eller vesken. Bruk den som en daglig påminnelse om tro og beskyttelse. Perfekt også som gave ved spesielle anledninger.",
+  care: [
+    "Tørk av med en myk klut ved behov",
+    "Unngå sterke kjemikalier for å bevare graveringen",
+    "Oppbevares tørt når den ikke er i bruk",
+    "Laget for daglig bruk uten å miste kvalitet",
+  ],
+  specs: [
+    "Materiale: Rustfritt stål",
+    "Egenskaper: Vanntett, slitesterk og korrosjonsbestandig",
+    "Design: Inngravert bibelvers (Salme 91:11)",
+    "Størrelse: Kompakt og lett",
+    "Bruksområde: Nøkler, vesker, sekker og tilbehør",
+  ],
+}
+
 /**
  * Lookup table keyed by Shopify product handle. Add new products here.
  * Handle values match the Shopify storefront handle exactly.
@@ -138,6 +189,10 @@ export const productContentByHandle: Readonly<Record<string, ProductContent>> = 
   // Norwegian handle variant (fallback)
   "bibelvers-krukke": bibelversKrukke,
   "family-bible-verse-alloy-bookmark": bibelversBokmerke,
+  "christian-gifts-for-women-faith-christian-stocking-stuffers-christmas-gifts-for-christian-women-religious-gifts-for-men-christian-keychain-bible-verse-keychain-jesus-gifts-scripture-gifts-for-women":
+    kristenNokkelring,
+  // Short alias for when a future redirect is set up in Shopify
+  "kristen-nokkelring": kristenNokkelring,
 }
 
 export function getProductContent(handle: string): ProductContent | null {
