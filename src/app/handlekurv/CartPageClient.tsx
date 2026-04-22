@@ -25,10 +25,20 @@ import { isAllowedCheckoutUrl } from "@/lib/shopify/checkout"
 const FREE_SHIPPING_THRESHOLD = 499
 
 function formatNOK(amount: string | number): string {
-  return `kr ${Number(amount).toLocaleString("nb-NO", {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
+  const num = Number(amount)
+  const digits = Number.isInteger(num) ? 0 : 2
+  return `kr ${num.toLocaleString("nb-NO", {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
   })}`
+}
+
+function isMeaningfulVariantTitle(title: string | null | undefined): boolean {
+  if (!title) return false
+  const trimmed = title.trim()
+  if (!trimmed) return false
+  const lowered = trimmed.toLowerCase()
+  return lowered !== "default title" && lowered !== "n/a" && lowered !== "standard"
 }
 
 // ---------------------------------------------------------------------------
@@ -130,7 +140,7 @@ function CartRow({ item, onRemove, onUpdate, disabled }: CartRowProps) {
             >
               {item.productTitle}
             </Link>
-            {item.variantTitle !== "Default Title" && (
+            {isMeaningfulVariantTitle(item.variantTitle) && (
               <p className="mt-0.5 text-xs text-muted-foreground">
                 {item.variantTitle}
               </p>

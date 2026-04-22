@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
-import { MailIcon, PhoneIcon, ClockIcon, CheckCircleIcon } from "lucide-react";
+import { MailIcon, ClockIcon, CheckCircleIcon } from "lucide-react";
 
 const EASE = [0.22, 1, 0.36, 1] as [number, number, number, number];
 
@@ -293,17 +293,10 @@ export default function KontaktContent() {
               delay={0.05}
             />
             <ContactInfoCard
-              icon={<PhoneIcon className="size-5" aria-hidden="true" />}
-              label="Telefon"
-              value="+47 XXX XX XXX"
-              href="tel:+47XXXXXXXXX"
-              delay={0.1}
-            />
-            <ContactInfoCard
               icon={<ClockIcon className="size-5" aria-hidden="true" />}
-              label="Åpningstider"
-              value="Man\u2013Fre 09:00\u201317:00"
-              delay={0.15}
+              label="Svartid"
+              value={"Normalt innen 24 timer, ma–fr"}
+              delay={0.1}
             />
           </div>
         </div>

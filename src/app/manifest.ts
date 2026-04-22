@@ -9,19 +9,9 @@ export default function manifest(): MetadataRoute.Manifest {
     display: "standalone",
     background_color: "#F7F4EF",
     theme_color: "#51304A",
-    icons: [
-      {
-        src: "/icons/icon-192x192.png",
-        sizes: "192x192",
-        type: "image/png",
-        purpose: "maskable",
-      },
-      {
-        src: "/icons/icon-512x512.png",
-        sizes: "512x512",
-        type: "image/png",
-        purpose: "any",
-      },
-    ],
+    // Icons are served via the app-router icon conventions
+    // (src/app/icon.tsx + apple-icon.tsx). No manifest icons until
+    // dedicated PNG assets exist in /public/icons/.
+    icons: [],
   }
 }

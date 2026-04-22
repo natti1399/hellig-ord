@@ -23,10 +23,20 @@ import type { CartItem } from "@/lib/shopify/types"
 // ---------------------------------------------------------------------------
 
 function formatNOK(amount: string): string {
-  return `kr ${Number(amount).toLocaleString("nb-NO", {
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 2,
+  const num = Number(amount)
+  const digits = Number.isInteger(num) ? 0 : 2
+  return `kr ${num.toLocaleString("nb-NO", {
+    minimumFractionDigits: digits,
+    maximumFractionDigits: digits,
   })}`
+}
+
+function isMeaningfulVariantTitle(title: string | null | undefined): boolean {
+  if (!title) return false
+  const trimmed = title.trim()
+  if (!trimmed) return false
+  const lowered = trimmed.toLowerCase()
+  return lowered !== "default title" && lowered !== "n/a" && lowered !== "standard"
 }
 
 // ---------------------------------------------------------------------------
@@ -79,7 +89,7 @@ function CartLineItem({
             <p className="truncate text-sm font-medium leading-snug text-foreground">
               {item.productTitle}
             </p>
-            {item.variantTitle !== "Default Title" && (
+            {isMeaningfulVariantTitle(item.variantTitle) && (
               <p className="text-xs text-muted-foreground">{item.variantTitle}</p>
             )}
           </div>

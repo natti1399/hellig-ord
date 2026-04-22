@@ -9,7 +9,7 @@ const isConfigured = storeDomain.length > 0 && publicAccessToken.length > 0
 export const storefrontClient = isConfigured
   ? createStorefrontApiClient({
       storeDomain,
-      apiVersion: "2025-01",
+      apiVersion: "2025-07",
       publicAccessToken,
     })
   : null

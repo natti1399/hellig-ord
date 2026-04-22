@@ -14,6 +14,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet"
+import { useCart } from "@/context/CartContext"
 
 interface NavLink {
   href: string
@@ -61,8 +62,10 @@ function NavItem({ href, label }: NavLink) {
 }
 
 function CartButton({ itemCount = 0 }: { itemCount?: number }) {
+  const label =
+    itemCount === 1 ? "Handlekurv, 1 vare" : `Handlekurv, ${itemCount} varer`
   return (
-    <Link href="/handlekurv" aria-label={`Handlekurv, ${itemCount} varer`}>
+    <Link href="/handlekurv" aria-label={label}>
       <motion.div
         className="relative flex items-center justify-center size-11 rounded-lg text-foreground/70 hover:text-foreground hover:bg-muted transition-colors duration-200"
         whileHover={{ scale: 1.05 }}
@@ -87,6 +90,7 @@ function CartButton({ itemCount = 0 }: { itemCount?: number }) {
 export function Header() {
   const [mobileOpen, setMobileOpen] = React.useState(false)
   const [scrolled, setScrolled] = React.useState(false)
+  const { totalQuantity } = useCart()
 
   React.useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 8)
@@ -130,7 +134,7 @@ export function Header() {
 
         {/* Right: Cart + mobile menu */}
         <div className="flex items-center gap-2">
-          <CartButton itemCount={0} />
+          <CartButton itemCount={totalQuantity} />
 
           {/* Mobile hamburger */}
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>

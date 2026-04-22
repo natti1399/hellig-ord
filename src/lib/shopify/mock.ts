@@ -5,7 +5,11 @@ import type { Cart } from "./types"
 // Mock data — returned when Shopify env vars are not configured
 // ---------------------------------------------------------------------------
 
-if (process.env.NODE_ENV === "development") {
+if (
+  process.env.NODE_ENV === "development" &&
+  (!process.env.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN ||
+    !process.env.NEXT_PUBLIC_SHOPIFY_STOREFRONT_TOKEN)
+) {
   console.warn(
     "[Shopify] NOT CONFIGURED — using mock data. Set NEXT_PUBLIC_SHOPIFY_* env vars."
   )
