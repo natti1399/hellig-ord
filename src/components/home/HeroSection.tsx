@@ -86,10 +86,10 @@ export function HeroSection() {
             transition={{ duration: 0.8, delay: 0.3, ease: 'easeOut' }}
             className="relative mx-auto w-full max-w-lg lg:max-w-none"
           >
-            <div className="relative aspect-[1112/1415] w-full overflow-hidden rounded-2xl">
+            <div className="relative aspect-[2/3] w-full overflow-hidden rounded-2xl">
               <Image
                 src="/images/hero-composite.jpg"
-                alt="Bibelvers-krukke sammen med Den hellige skrift, eukalyptus og nøkkelring med Ordspråkene 3:5 – med teksten «Små påminnelser. Stor tro. La Guds ord styrke deg – hver eneste dag.»"
+                alt="Bibelvers-krukke «Read Me When…» med fargekodede vers, sammen med den sorte gaveesken og brudeslør i varmt naturlys."
                 fill
                 className="object-cover"
                 priority
