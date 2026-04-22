@@ -1,8 +1,9 @@
 /**
  * Editorial product copy keyed by Shopify product handle.
  *
- * Source: Lorena's Messenger message Sat 05:49 — her verbatim Norwegian copy
- * for the Bibelvers-krukke. Catalog bullets feed the ProductCard; section copy
+ * Source: Lorena's Messenger messages — her verbatim Norwegian copy for the
+ * Bibelvers-krukke and bokmerke. The teppe copy is an in-house draft that
+ * Lorena can refine later. Catalog bullets feed the ProductCard; section copy
  * feeds the 4 collapsible rows on the product detail page.
  */
 
@@ -65,7 +66,7 @@ const bibelversKrukke: ProductContent = {
       body: "Ikke alle gaver føles like viktige. Denne gjør det.\n\nPerfekt til:",
       bullets: [
         "Noen som går gjennom en tøff tid",
-        "\u201CGod bedring\u201D-gave",
+        "“God bedring”-gave",
         "Bursdag, jul eller dåp",
         "Eller som en stille påminnelse: du er ikke alene",
       ],
@@ -129,55 +130,60 @@ const bibelversBokmerke: ProductContent = {
   ],
 }
 
-const kristenNokkelring: ProductContent = {
-  tagline: "Kristen nøkkelring – Salme 91:11",
-  hook: "En daglig påminnelse om tro og beskyttelse – bær ordet med deg hver dag.",
+const bibelskTeppe: ProductContent = {
+  tagline: "Bibelsk teppe – mykt pledd med bibelvers",
+  hook: "Et mykt pledd som minner deg på Guds nærhet – i stille stunder og tunge dager.",
   catalogBullets: [
-    "Inngravert bibelvers med sterk betydning (Salme 91:11)",
-    "Slitesterkt rustfritt stål – tåler hverdagsbruk",
-    "Lett og praktisk – plass på nøkler, vesker og sekker",
-    "Passer både menn, kvinner og barn",
-    "Vanntett og korrosjonsbestandig",
-    "Symbol på tro, beskyttelse og omsorg",
-    "Perfekt gave til kristne anledninger",
+    "Mykt og varmt pledd i god kvalitet",
+    "Trykk med inspirerende bibelvers",
+    "Perfekt til sofaen, sengen eller leseplassen",
+    "Gir ro, trøst og en påminnelse om Guds nærhet",
+    "Tre størrelser – passer både barn og voksne",
+    "Stilren design som kler de fleste hjem",
+    "En gave som varmer både kropp og sjel",
   ],
   description: [
     {
-      heading: "Bær troen med deg",
-      body: "Bær med deg en daglig påminnelse om tro og beskyttelse med denne vakre kristne nøkkelringen med bibelvers. På forsiden er det inngravert det inspirerende verset:\n\n\u201CFor han skal gi sine englene befaling om å bevare deg på alle dine veier.\u201D\n– Salme 91:11",
+      heading: "Mer enn et pledd",
+      body: "Noen dager trenger du bare å pakke deg inn i noe varmt – og bli minnet på at du er elsket.\n\nDette bibelske teppet er laget for akkurat de stundene. Mykt, varmt og med et bibelvers som taler rett inn i hverdagen.",
     },
     {
-      heading: "💛 Mer enn et tilbehør",
-      body: "Denne nøkkelringen er mer enn bare et tilbehør – den er en symbolsk gave fylt med omsorg, bønn og kjærlighet. Perfekt som en personlig påminnelse eller som en meningsfull gave til noen du ønsker å velsigne.",
-    },
-    {
-      heading: "🎁 Perfekt gave til mange anledninger",
+      heading: "💛 Der kropp og tro møtes",
       bullets: [
-        "Bursdag",
-        "Dåp og konfirmasjon",
-        "Første nattverd",
-        "Jul og påske",
-        "Valentinsdagen",
-        "Innflytningsfest",
-        "Menighetsgaver og arrangementer",
+        "Mykt mot huden – perfekt til sofaen eller sengen",
+        "Holder varmen uten å bli tungt",
+        "Bibelverset minner deg om Guds omsorg i enhver situasjon",
+        "En trygg favoritt i hjemmet",
+      ],
+    },
+    {
+      heading: "🎁 En gave med mening",
+      body: "Perfekt til:",
+      bullets: [
+        "Noen som trenger trøst",
+        "Dåps- eller konfirmasjonsgave",
+        "Bursdag eller jul",
+        "En kjær venn eller familiemedlem",
       ],
     },
   ],
   usage:
-    "Fest nøkkelringen til nøkkelknippet ditt eller vesken. Bruk den som en daglig påminnelse om tro og beskyttelse. Perfekt også som gave ved spesielle anledninger.",
+    "Bruk teppet på sofaen, i sengen eller som et ekstra lag på en kjølig kveld. Ta det med deg når du ønsker et rolig øyeblikk med Guds ord.",
   care: [
-    "Tørk av med en myk klut ved behov",
-    "Unngå sterke kjemikalier for å bevare graveringen",
-    "Oppbevares tørt når den ikke er i bruk",
-    "Laget for daglig bruk uten å miste kvalitet",
+    "Maskinvask på 30 °C med mildt vaskemiddel",
+    "Unngå blekemiddel for å bevare farger og trykk",
+    "Tørketrommel på lav varme eller lufttørking",
+    "Stryk på lav varme hvis nødvendig",
   ],
   specs: [
-    "Materiale: Rustfritt stål",
-    "Egenskaper: Vanntett, slitesterk og korrosjonsbestandig",
-    "Design: Inngravert bibelvers (Salme 91:11)",
-    "Størrelse: Kompakt og lett",
-    "Bruksområde: Nøkler, vesker, sekker og tilbehør",
+    "Materiale: Mykt polyester-fleece",
+    "Størrelser: 100×130 cm, 130×150 cm, 150×200 cm",
+    "Design: Bibelvers trykket på teppet",
+    "Bruksområde: Sofa, seng, leseplass",
+    "Vaskbart: Ja, maskinvask 30 °C",
   ],
+  specsNote:
+    "Små måleavvik kan forekomme. Farger kan variere noe etter skjerm og lysforhold.",
 }
 
 /**
@@ -189,10 +195,9 @@ export const productContentByHandle: Readonly<Record<string, ProductContent>> = 
   // Norwegian handle variant (fallback)
   "bibelvers-krukke": bibelversKrukke,
   "family-bible-verse-alloy-bookmark": bibelversBokmerke,
-  "christian-gifts-for-women-faith-christian-stocking-stuffers-christmas-gifts-for-christian-women-religious-gifts-for-men-christian-keychain-bible-verse-keychain-jesus-gifts-scripture-gifts-for-women":
-    kristenNokkelring,
-  // Short alias for when a future redirect is set up in Shopify
-  "kristen-nokkelring": kristenNokkelring,
+  "christian-bible-verse-blanket-for-women-soft-plush-throw": bibelskTeppe,
+  // Short alias if we set up a Shopify URL redirect later
+  "bibelsk-teppe": bibelskTeppe,
 }
 
 export function getProductContent(handle: string): ProductContent | null {
