@@ -203,8 +203,10 @@ const bibelskTeppe: ProductContent = {
  * Handle values match the Shopify storefront handle exactly.
  */
 export const productContentByHandle: Readonly<Record<string, ProductContent>> = {
+  // Lorena's new krukke (April 27, after the Zendrop one was deleted)
+  "bible-verse-jar-ornament": bibelversKrukke,
+  // Earlier krukke handles (kept for redirect fallbacks if any old links exist)
   "bible-verse-inspiration-jar": bibelversKrukke,
-  // Norwegian handle variant (fallback)
   "bibelvers-krukke": bibelversKrukke,
   "family-bible-verse-alloy-bookmark": bibelversBokmerke,
   "christian-bible-verse-blanket-for-women-soft-plush-throw": bibelskTeppe,
