@@ -18,11 +18,22 @@ export const metadata: Metadata = {
   },
 }
 
+const FEATURED_HANDLES = [
+  "bible-verse-jar-ornament",
+  "bible-verse-inspiration-jar",
+  "bibelvers-krukke",
+] as const
+
 export default async function HomePage() {
   const products = await getProducts()
-  const featured = products[0] ?? null
+  const featured =
+    FEATURED_HANDLES.map((h) => products.find((p) => p.handle === h)).find(
+      (p): p is (typeof products)[number] => Boolean(p)
+    ) ??
+    products[0] ??
+    null
   const featuredVariantId = featured?.variants.edges[0]?.node.id ?? null
-  const featuredHandle = featured?.handle ?? "bible-verse-inspiration-jar"
+  const featuredHandle = featured?.handle ?? "bible-verse-jar-ornament"
 
   return (
     <>

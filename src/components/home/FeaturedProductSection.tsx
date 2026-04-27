@@ -7,9 +7,18 @@ import { FeaturedAddToCartButton } from "./FeaturedAddToCartButton"
 import { PaymentIcons } from "@/components/shared/PaymentIcons"
 import { Truck, RotateCcw, ShieldCheck } from "lucide-react"
 
+const FEATURED_HANDLES = [
+  "bible-verse-jar-ornament",
+  "bible-verse-inspiration-jar",
+  "bibelvers-krukke",
+] as const
+
 export async function FeaturedProductSection() {
   const products = await getProducts()
-  const product = products[0]
+  const product =
+    FEATURED_HANDLES.map((h) => products.find((p) => p.handle === h)).find(
+      (p): p is (typeof products)[number] => Boolean(p)
+    ) ?? products[0]
 
   if (!product) return null
 
