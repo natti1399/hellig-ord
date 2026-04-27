@@ -1,30 +1,39 @@
 import type { Metadata } from "next"
 import { HeroSection } from "@/components/home/HeroSection"
 import { SocialProofSection } from "@/components/home/SocialProofSection"
-import { GiftOccasionsSection } from "@/components/home/GiftOccasionsSection"
 import { EmotionalSection } from "@/components/home/EmotionalSection"
-import { BottomCTASection } from "@/components/home/BottomCTASection"
+import { GiftOccasionsSection } from "@/components/home/GiftOccasionsSection"
+import { FeaturedProductSection } from "@/components/home/FeaturedProductSection"
 import { StickyMobileCTA } from "@/components/home/StickyMobileCTA"
+import { getProducts } from "@/lib/shopify/actions"
 
 export const metadata: Metadata = {
-  title: "Hellig Ord – En gave som gir ro, håp og styrke",
+  title: "Hellig Ord – Kristne produkter som gir ro, styrke og trøst",
   description:
-    "Ord som bærer deg gjennom hverdagen. Hellig Ord bringer deg bibelvers med varme og håp — utforsk vår samling og finn den rette gaven.",
+    "Oppdag vår populære bibelvers-krukke – et ord fra Gud, akkurat når du trenger det. Norsk nettbutikk med gratis frakt og 30 dagers åpent kjøp.",
   openGraph: {
-    title: "Hellig Ord – En gave som gir ro, håp og styrke",
+    title: "Hellig Ord – Kristne produkter som gir ro, styrke og trøst",
     description:
-      "Ord som bærer deg gjennom hverdagen. Utforsk Hellig Ords samling av bibelvers-produkter.",
+      "Oppdag vår populære bibelvers-krukke – et ord fra Gud, akkurat når du trenger det.",
   },
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const products = await getProducts()
+  const featured = products[0] ?? null
+  const featuredVariantId = featured?.variants.edges[0]?.node.id ?? null
+  const featuredHandle = featured?.handle ?? "bible-verse-inspiration-jar"
+
   return (
     <>
-      <HeroSection />
+      <HeroSection
+        featuredVariantId={featuredVariantId}
+        featuredHandle={featuredHandle}
+      />
       <SocialProofSection />
       <EmotionalSection />
       <GiftOccasionsSection />
-      <BottomCTASection />
+      <FeaturedProductSection />
       <StickyMobileCTA />
     </>
   )

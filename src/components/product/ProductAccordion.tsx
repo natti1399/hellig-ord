@@ -80,9 +80,17 @@ export function ProductAccordion({ content }: ProductAccordionProps) {
           <span>Bruksveileder</span>
         </AccordionTrigger>
         <AccordionContent>
-          <p className="pb-4 pt-1 font-sans text-sm text-muted-foreground leading-relaxed">
-            {content.usage}
-          </p>
+          <ul className="space-y-1.5 pb-4 pt-1">
+            {content.usageBullets.map((step) => (
+              <li
+                key={step.slice(0, 48)}
+                className="flex items-start gap-2 font-sans text-sm text-muted-foreground"
+              >
+                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" aria-hidden />
+                {step}
+              </li>
+            ))}
+          </ul>
         </AccordionContent>
       </AccordionItem>
 

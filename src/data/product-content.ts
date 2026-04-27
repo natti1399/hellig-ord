@@ -24,8 +24,8 @@ export interface ProductContent {
   badge?: string
   /** Rich Beskrivelse section — multiple blocks with headings. */
   description: readonly ProductDescriptionBlock[]
-  /** Short Bruksveileder (usage) text. */
-  usage: string
+  /** Bruksveileder bullets — short, scannable usage steps. */
+  usageBullets: readonly string[]
   /** Pleie og vedlikehold bullets. */
   care: readonly string[]
   /** Spesifikasjoner bullets. */
@@ -72,8 +72,12 @@ const bibelversKrukke: ProductContent = {
       ],
     },
   ],
-  usage:
-    "Åpne krukken. Velg fargen som passer følelsen din. Trekk ett bibelvers, les i ro og kjenn på Guds ord.",
+  usageBullets: [
+    "Åpne krukken når du trenger et ord fra Guds hjerte",
+    "Velg fargen som passer følelsen du står i",
+    "Trekk ett bibelvers og les det i ro",
+    "Pust dypt og la ordene møte deg der du er",
+  ],
   care: [
     "Håndteres forsiktig – laget av glass",
     "Oppbevar lappene unna direkte sollys",
@@ -112,8 +116,12 @@ const bibelversBokmerke: ProductContent = {
       body: "Perfekt som en personlig detalj eller en gjennomtenkt gave til noen du er glad i.",
     },
   ],
-  usage:
-    "Plasser bokmerket mellom sidene der du ønsker å markere. La det hvile lett uten å presse, for å unngå merker i papiret. Ta det enkelt ut når du fortsetter lesingen. Perfekt for daglig bruk – både hjemme, i kirken eller på farten.",
+  usageBullets: [
+    "Plasser bokmerket mellom sidene der du ønsker å markere",
+    "La det hvile lett uten å presse, for å unngå merker i papiret",
+    "Ta det enkelt ut når du fortsetter lesingen",
+    "Perfekt for daglig bruk – hjemme, i kirken eller på farten",
+  ],
   care: [
     "Tørk av med en myk, tørr klut ved behov",
     "Unngå kontakt med vann og kjemikalier for å bevare finishen",
@@ -167,8 +175,12 @@ const bibelskTeppe: ProductContent = {
       ],
     },
   ],
-  usage:
-    "Bruk teppet på sofaen, i sengen eller som et ekstra lag på en kjølig kveld. Ta det med deg når du ønsker et rolig øyeblikk med Guds ord.",
+  usageBullets: [
+    "Bruk teppet på sofaen, i sengen eller leseplassen",
+    "Pakk deg inn for et ekstra lag på en kjølig kveld",
+    "Ta det med deg til rolige øyeblikk med Guds ord",
+    "Vask det jevnlig så det holder seg mykt og nydelig lenge",
+  ],
   care: [
     "Maskinvask på 30 °C med mildt vaskemiddel",
     "Unngå blekemiddel for å bevare farger og trykk",

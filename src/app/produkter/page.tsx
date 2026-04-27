@@ -1,7 +1,15 @@
 import type { Metadata } from "next"
+import { Truck, RotateCcw, Store, ShieldCheck } from "lucide-react"
 import { getProducts } from "@/lib/shopify/actions"
 import { ProductGrid } from "@/components/product/ProductGrid"
 import type { Product } from "@/types/product"
+
+const trustPoints = [
+  { icon: Truck, text: "Gratis frakt i hele Norge" },
+  { icon: RotateCcw, text: "30 dagers åpent kjøp" },
+  { icon: Store, text: "Norsk nettbutikk" },
+  { icon: ShieldCheck, text: "Trygg betaling" },
+]
 
 export const metadata: Metadata = {
   title: "Kristne gaver og bibelvers produkter",
@@ -93,23 +101,21 @@ export default async function ProdukterPage() {
         <ProductGrid products={products} />
       </section>
 
-      {/* Trust strip */}
-      <section className="border-t" style={{ borderColor: "#e8e2db" }}>
-        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-          <ul className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-            {[
-              { icon: "✦", text: "Gratis frakt i hele Norge" },
-              { icon: "✦", text: "30 dagers åpent kjøp" },
-              { icon: "✦", text: "Sendes fra Norge" },
-              { icon: "✦", text: "Trygg betaling" },
-            ].map(({ icon, text }) => (
+      {/* Trust strip — 4 even, centered, balanced boxes (matches homepage) */}
+      <section className="border-t bg-background" style={{ borderColor: "#e8e2db" }}>
+        <div className="mx-auto max-w-6xl px-4 py-12 sm:px-6 sm:py-16 lg:px-8">
+          <ul className="grid grid-cols-2 gap-4 sm:grid-cols-4 sm:gap-5">
+            {trustPoints.map(({ icon: Icon, text }) => (
               <li
                 key={text}
-                className="flex items-center gap-2 font-sans text-sm"
-                style={{ color: "#8AA29E" }}
+                className="flex flex-col items-center gap-3 rounded-2xl border border-border bg-card p-5 text-center shadow-sm"
               >
-                <span className="text-xs" aria-hidden="true">{icon}</span>
-                <span style={{ color: "#7a6a62" }}>{text}</span>
+                <div className="flex size-10 items-center justify-center rounded-full bg-accent/10">
+                  <Icon className="size-5 text-accent" aria-hidden />
+                </div>
+                <p className="font-sans text-xs font-medium leading-snug text-foreground/80 sm:text-sm">
+                  {text}
+                </p>
               </li>
             ))}
           </ul>

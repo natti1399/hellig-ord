@@ -126,7 +126,6 @@ export async function FeaturedProductSection() {
                     <FeaturedAddToCartButton
                       variantId={firstVariant.id}
                       productName="Bibelvers-krukke"
-                      productImage={firstImage?.url}
                     />
                   )}
                   <Link
@@ -134,7 +133,7 @@ export async function FeaturedProductSection() {
                     className="inline-flex h-11 items-center justify-center rounded-full border border-primary/20 px-6 font-sans text-sm font-medium text-primary hover:bg-primary/5 hover:border-primary/30 transition-all duration-300"
                     aria-label="Se detaljer for Bibelvers-krukke"
                   >
-                    Les mer
+                    Se produkt
                   </Link>
                 </div>
 
