@@ -2,7 +2,7 @@ import { HomeIcon, TruckIcon, RotateCcwIcon, ShieldCheckIcon } from "lucide-reac
 
 const trustItems = [
   { icon: HomeIcon, label: "Trygg handel" },
-  { icon: TruckIcon, label: "Rask levering" },
+  { icon: TruckIcon, label: "Gratis frakt" },
   { icon: RotateCcwIcon, label: "30 dagers retur" },
   { icon: ShieldCheckIcon, label: "Sikker betaling" },
 ]

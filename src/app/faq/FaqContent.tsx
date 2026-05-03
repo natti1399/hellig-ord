@@ -42,7 +42,7 @@ const faqItems: FaqItem[] = [
     id: "frakt",
     question: "Sender dere til hele Norge?",
     answer:
-      "Ja, vi sender til alle adresser i Norge. Gratis frakt på bestillinger over 499 kr.",
+      "Ja, vi sender til alle adresser i Norge. Frakt er gratis og inkludert i prisen – du betaler ikke noe ekstra for levering.",
   },
   {
     id: "kontakt",

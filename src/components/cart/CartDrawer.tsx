@@ -301,7 +301,7 @@ export function CartDrawer() {
 
               {/* Shipping note */}
               <p className="text-center text-xs text-muted-foreground">
-                Gratis frakt over 499 kr
+                Gratis frakt i hele Norge – inkludert i prisen
               </p>
             </div>
           </SheetFooter>

@@ -4,7 +4,7 @@ const USP_ITEMS = [
   'Håndplukket med omtanke',
   'Rask levering',
   'Inspirert av Guds ord',
-  'Gratis frakt over 499 kr',
+  'Gratis frakt i hele Norge',
   '14 dagers angrerett',
   'Sikker betaling',
   'Vakre kristne gaver',

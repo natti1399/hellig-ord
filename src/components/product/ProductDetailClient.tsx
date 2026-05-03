@@ -157,13 +157,12 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
             <AccordionContent>
               <div className="font-sans text-sm text-muted-foreground leading-relaxed space-y-2 pb-2">
                 <p>
-                  Vi sender alle bestillinger innen 1–3 virkedager. Levering til
-                  hele Norge via Posten og PostNord.
+                  Frakt er gratis og inkludert i prisen – du betaler ikke noe ekstra for levering i Norge.
                 </p>
                 <ul className="space-y-1 mt-2">
-                  <li>Standardlevering (3–7 virkedager): kr 69</li>
-                  <li>Ekspress (1–3 virkedager): kr 129</li>
-                  <li>Gratis frakt på bestillinger over kr 599</li>
+                  <li>Levering til hele Norge via Posten og PostNord</li>
+                  <li>Sendes innen 1–3 virkedager</li>
+                  <li>Estimert leveringstid: 5–10 virkedager</li>
                 </ul>
               </div>
             </AccordionContent>
