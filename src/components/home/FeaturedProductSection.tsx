@@ -3,22 +3,20 @@ import Link from "next/link"
 import { Badge } from "@/components/ui/badge"
 import { FadeInSection } from "./FadeInSection"
 import { getProducts } from "@/lib/shopify/actions"
+import { formatPrice } from "@/lib/mock-data"
 import { FeaturedAddToCartButton } from "./FeaturedAddToCartButton"
-import { PaymentIcons } from "@/components/shared/PaymentIcons"
-import { Truck, RotateCcw, ShieldCheck } from "lucide-react"
+import { TrustPaymentGrid } from "@/components/shared/TrustPaymentGrid"
 
-const FEATURED_HANDLES = [
+const KRUKKE_HANDLES = [
   "bible-verse-jar-ornament",
   "bible-verse-inspiration-jar",
   "bibelvers-krukke",
-] as const
+]
 
 export async function FeaturedProductSection() {
   const products = await getProducts()
   const product =
-    FEATURED_HANDLES.map((h) => products.find((p) => p.handle === h)).find(
-      (p): p is (typeof products)[number] => Boolean(p)
-    ) ?? products[0]
+    products.find((p) => KRUKKE_HANDLES.includes(p.handle)) ?? products[0]
 
   if (!product) return null
 
@@ -26,9 +24,15 @@ export async function FeaturedProductSection() {
   const firstVariant = product.variants.edges[0]?.node
   const handle = product.handle
 
+  const price = firstVariant
+    ? formatPrice(firstVariant.price.amount, firstVariant.price.currencyCode)
+    : formatPrice(
+        product.priceRange.minVariantPrice.amount,
+        product.priceRange.minVariantPrice.currencyCode
+      )
+
   return (
     <section
-      id="produkt"
       className="bg-background py-16 md:py-24"
       aria-labelledby="featured-product-heading"
     >
@@ -46,7 +50,7 @@ export async function FeaturedProductSection() {
         {/* Product card */}
         <div className="mx-auto max-w-4xl">
           <div className="grid grid-cols-1 gap-0 overflow-hidden rounded-2xl border border-border bg-card shadow-sm md:grid-cols-2">
-            {/* Product image area */}
+            {/* Product image */}
             <FadeInSection direction="left" delay={0.1} className="relative">
               <Link
                 href={`/produkter/${handle}`}
@@ -75,7 +79,6 @@ export async function FeaturedProductSection() {
                 )}
               </Link>
 
-              {/* Badge */}
               <div className="absolute top-4 left-4 pointer-events-none">
                 <Badge className="bg-accent text-accent-foreground font-sans text-xs tracking-wide font-medium px-3 py-1 rounded-full">
                   Nyhet
@@ -92,21 +95,22 @@ export async function FeaturedProductSection() {
               <h3 className="font-heading text-xl font-bold tracking-wide text-primary sm:text-2xl leading-snug">
                 Bibelvers-krukke
                 <span className="block font-normal italic text-lg">
-                  Finn trøst, håp og styrke – ett vers om gangen
+                  60 vers for alle livets øyeblikk
                 </span>
               </h3>
 
               <p className="mt-4 font-sans text-sm leading-relaxed text-muted-foreground">
-                En vakker krukke med bibelvers for livets små og store øyeblikk.
-                Perfekt som gave — eller til deg selv som daglig inspirasjon.
+                En vakker glaskrukke fylt med 60 håndskrevne bibelvers. Perfekt
+                som gave til noen du er glad i — eller til deg selv som en daglig
+                påminnelse om Guds kjærlighet.
               </p>
 
               {/* Features */}
               <ul className="mt-5 space-y-2" aria-label="Produktegenskaper">
                 {[
-                  "60 fargerike kort med bibelvers",
-                  "Etikett med «Les meg når...»",
-                  "Inkludert gaveeske med kors",
+                  "60 bibelvers i elegant glass krukke",
+                  "Fargekodet etter følelser",
+                  "Inkludert gaveeske",
                 ].map((feature) => (
                   <li
                     key={feature}
@@ -121,48 +125,34 @@ export async function FeaturedProductSection() {
               </ul>
 
               <div className="mt-7">
-                <p className="font-heading text-3xl font-bold text-primary">
-                  kr 384
+                <p className="font-sans text-xs text-muted-foreground tracking-wide mb-1">
+                  Pris
                 </p>
-                <p className="mt-1 font-sans text-xs text-muted-foreground">
-                  Gratis levering i hele Norge
+                <p className="font-heading text-3xl font-bold text-primary">
+                  {price}
                 </p>
               </div>
 
-              <div className="mt-6 flex flex-col gap-3">
-                <div className="flex flex-col gap-3 sm:flex-row">
-                  {firstVariant && (
-                    <FeaturedAddToCartButton
-                      variantId={firstVariant.id}
-                      productName="Bibelvers-krukke"
-                    />
-                  )}
-                  <Link
-                    href={`/produkter/${handle}`}
-                    className="inline-flex h-11 items-center justify-center rounded-full border border-primary/20 px-6 font-sans text-sm font-medium text-primary hover:bg-primary/5 hover:border-primary/30 transition-all duration-300"
-                    aria-label="Se detaljer for Bibelvers-krukke"
-                  >
-                    Se produkt
-                  </Link>
-                </div>
+              {/* CTA block */}
+              <div className="mt-6 flex flex-col gap-2">
+                {firstVariant && (
+                  <FeaturedAddToCartButton
+                    variantId={firstVariant.id}
+                    productName="Bibelvers-krukke"
+                    productImage={firstImage?.url}
+                  />
+                )}
+                <Link
+                  href={`/produkter/${handle}`}
+                  className="flex h-14 w-full items-center justify-center rounded-xl border border-primary bg-transparent font-sans text-sm font-semibold tracking-wide text-primary transition-all duration-200 hover:bg-primary/5"
+                  aria-label="Se detaljer for Bibelvers-krukke"
+                >
+                  Les mer
+                </Link>
+              </div>
 
-                {/* Trust signals */}
-                <div className="flex flex-wrap items-center gap-4 pt-2 text-muted-foreground">
-                  <span className="flex items-center gap-1 text-xs">
-                    <Truck className="size-3.5" aria-hidden />
-                    Gratis frakt
-                  </span>
-                  <span className="flex items-center gap-1 text-xs">
-                    <RotateCcw className="size-3.5" aria-hidden />
-                    30 dagers åpent kjøp
-                  </span>
-                  <span className="flex items-center gap-1 text-xs">
-                    <ShieldCheck className="size-3.5" aria-hidden />
-                    Trygg betaling
-                  </span>
-                </div>
-
-                <PaymentIcons size="sm" className="pt-1" />
+              <div className="mt-3">
+                <TrustPaymentGrid />
               </div>
             </FadeInSection>
           </div>

@@ -1,32 +1,21 @@
-'use client'
+"use client"
 
-import { useEffect, useState } from 'react'
-import Link from 'next/link'
+import { BuyNowButton } from "@/components/shared/BuyNowButton"
 
-const CATALOG_URL = '/produkter'
+interface StickyMobileCTAProps {
+  variantId?: string
+}
 
-export function StickyMobileCTA() {
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    function handleScroll() {
-      setVisible(window.scrollY > 600)
-    }
-
-    window.addEventListener('scroll', handleScroll, { passive: true })
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
-  if (!visible) return null
+export function StickyMobileCTA({ variantId }: StickyMobileCTAProps) {
+  if (!variantId) return null
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-border bg-background/95 backdrop-blur-sm p-3 md:hidden">
-      <Link
-        href={CATALOG_URL}
-        className="flex h-12 w-full items-center justify-center rounded-full bg-primary text-sm font-semibold tracking-wide text-primary-foreground shadow-lg"
-      >
-        Se alle produkter
-      </Link>
+    <div
+      className="fixed bottom-0 left-0 right-0 z-50 bg-background/95 px-4 pb-6 pt-3 shadow-[0_-4px_24px_rgba(0,0,0,0.08)] backdrop-blur-sm md:hidden"
+      role="region"
+      aria-label="Kjøp nå"
+    >
+      <BuyNowButton variantId={variantId} label="Kjøp nå" />
     </div>
   )
 }

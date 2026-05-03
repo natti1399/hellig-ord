@@ -1,51 +1,46 @@
-import type { Metadata } from "next"
-import { HeroSection } from "@/components/home/HeroSection"
-import { SocialProofSection } from "@/components/home/SocialProofSection"
-import { EmotionalSection } from "@/components/home/EmotionalSection"
-import { GiftOccasionsSection } from "@/components/home/GiftOccasionsSection"
-import { FeaturedProductSection } from "@/components/home/FeaturedProductSection"
-import { StickyMobileCTA } from "@/components/home/StickyMobileCTA"
-import { getProducts } from "@/lib/shopify/actions"
+import type { Metadata } from 'next'
+import { HeroSection } from '@/components/home/HeroSection'
+import { FeaturedProductSection } from '@/components/home/FeaturedProductSection'
+import { ValuePropsSection } from '@/components/home/ValuePropsSection'
+import { BibleQuoteSection } from '@/components/home/BibleQuoteSection'
+import { AboutSection } from '@/components/home/AboutSection'
+import { NewsletterSection } from '@/components/home/NewsletterSection'
+import { TestimonialSection } from '@/components/social-proof/TestimonialSection'
+import { StickyMobileCTA } from '@/components/home/StickyMobileCTA'
+import { getProducts } from '@/lib/shopify/actions'
 
 export const metadata: Metadata = {
-  title: "Hellig Ord – Kristne produkter som gir ro, styrke og trøst",
+  title: 'Hellig Ord – Ord som berører hjertet',
   description:
-    "Oppdag vår populære bibelvers-krukke – et ord fra Gud, akkurat når du trenger det. Norsk nettbutikk med gratis frakt og 30 dagers åpent kjøp.",
+    'Vakre kristne produkter som inspirerer tro, håp og kjærlighet. Utforsk vår Bibelvers-krukke og andre unike gaver, håndplukket med omtanke.',
   openGraph: {
-    title: "Hellig Ord – Kristne produkter som gir ro, styrke og trøst",
+    title: 'Hellig Ord – Ord som berører hjertet',
     description:
-      "Oppdag vår populære bibelvers-krukke – et ord fra Gud, akkurat når du trenger det.",
+      'Vakre kristne produkter som inspirerer tro, håp og kjærlighet. Utforsk vår Bibelvers-krukke og andre unike gaver.',
   },
 }
 
-const FEATURED_HANDLES = [
-  "bible-verse-jar-ornament",
-  "bible-verse-inspiration-jar",
-  "bibelvers-krukke",
-] as const
+const KRUKKE_HANDLES = [
+  'bible-verse-jar-ornament',
+  'bible-verse-inspiration-jar',
+  'bibelvers-krukke',
+]
 
 export default async function HomePage() {
   const products = await getProducts()
-  const featured =
-    FEATURED_HANDLES.map((h) => products.find((p) => p.handle === h)).find(
-      (p): p is (typeof products)[number] => Boolean(p)
-    ) ??
-    products[0] ??
-    null
-  const featuredVariantId = featured?.variants.edges[0]?.node.id ?? null
-  const featuredHandle = featured?.handle ?? "bible-verse-jar-ornament"
+  const krukke = products.find((p) => KRUKKE_HANDLES.includes(p.handle))
+  const krukkeVariantId = krukke?.variants.edges[0]?.node.id
 
   return (
     <>
-      <HeroSection
-        featuredVariantId={featuredVariantId}
-        featuredHandle={featuredHandle}
-      />
-      <SocialProofSection />
-      <EmotionalSection />
-      <GiftOccasionsSection />
+      <HeroSection variantId={krukkeVariantId} />
+      <ValuePropsSection />
+      <BibleQuoteSection />
+      <TestimonialSection />
       <FeaturedProductSection />
-      <StickyMobileCTA />
+      <AboutSection />
+      <NewsletterSection />
+      <StickyMobileCTA variantId={krukkeVariantId} />
     </>
   )
 }

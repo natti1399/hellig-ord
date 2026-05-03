@@ -2,85 +2,34 @@
 
 import { useState } from "react"
 import type { Product } from "@/types/product"
-import type { ProductContent } from "@/data/product-content"
 import { formatPrice } from "@/lib/mock-data"
 import { QuantitySelector } from "./QuantitySelector"
-import { PaymentIcons } from "@/components/shared/PaymentIcons"
+import {
+  Accordion,
+  AccordionItem,
+  AccordionTrigger,
+  AccordionContent,
+} from "@/components/ui/accordion"
+import { ShoppingBagIcon } from "lucide-react"
 import { useCart } from "@/context/CartContext"
 import { showAddToCartToast } from "@/components/notifications/AddToCartToast"
-import {
-  ShoppingBagIcon,
-  Truck,
-  RotateCcw,
-  ShieldCheck,
-  Heart,
-} from "lucide-react"
+import { TrustPaymentGrid } from "@/components/shared/TrustPaymentGrid"
 
 interface ProductDetailClientProps {
   product: Product
-  content?: ProductContent | null
 }
 
-/** Returns today + n business days (Mon–Fri). */
-function addBusinessDays(date: Date, days: number): Date {
-  const result = new Date(date)
-  let added = 0
-  while (added < days) {
-    result.setDate(result.getDate() + 1)
-    const dow = result.getDay()
-    if (dow !== 0 && dow !== 6) added++
-  }
-  return result
-}
-
-function formatNorwegian(date: Date): string {
-  return date.toLocaleDateString("nb-NO", { day: "numeric", month: "long" })
-}
-
-const TRUST_CARDS = [
-  {
-    icon: Truck,
-    title: "Gratis frakt",
-    desc: "Til hele Norge",
-  },
-  {
-    icon: RotateCcw,
-    title: "30 dagers retur",
-    desc: "Helt risikofritt",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Åpent kjøp",
-    desc: "Ingen spørsmål stilt",
-  },
-  {
-    icon: Heart,
-    title: "Tilfredshetsgaranti",
-    desc: "Vi stiller opp for deg",
-  },
-] as const
-
-export function ProductDetailClient({ product, content: _content }: ProductDetailClientProps) {
+export function ProductDetailClient({ product }: ProductDetailClientProps) {
   const { addItem, mutating } = useCart()
-
-  // Hide variants priced at 0 — those are half-configured placeholders in
-  // Shopify (e.g. a newly-added option without a real price). Showing them
-  // would let a customer check out for 0 kr.
-  const buyableVariants = product.variants.filter(
-    (v) => parseFloat(v.price.amount) > 0
-  )
-  const variantsToShow =
-    buyableVariants.length > 0 ? buyableVariants : product.variants
-
   const [selectedVariantId, setSelectedVariantId] = useState(
-    variantsToShow[0]?.id ?? ""
+    product.variants[0]?.id ?? ""
   )
   const [quantity, setQuantity] = useState(1)
   const [addedToCart, setAddedToCart] = useState(false)
 
   const selectedVariant =
-    variantsToShow.find((v) => v.id === selectedVariantId) ??
-    variantsToShow[0]
+    product.variants.find((v) => v.id === selectedVariantId) ??
+    product.variants[0]
 
   const price = selectedVariant
     ? formatPrice(
@@ -92,33 +41,24 @@ export function ProductDetailClient({ product, content: _content }: ProductDetai
         product.priceRange.minVariantPrice.currencyCode
       )
 
-  const hasMultipleVariants = variantsToShow.length > 1
-
-  const today = new Date()
-  const deliveryStart = formatNorwegian(addBusinessDays(today, 5))
-  const deliveryEnd = formatNorwegian(addBusinessDays(today, 10))
+  const hasMultipleVariants = product.variants.length > 1
 
   async function handleAddToCart() {
     if (!selectedVariantId) return
-    try {
-      await addItem(selectedVariantId, quantity)
-      setAddedToCart(true)
-      setTimeout(() => setAddedToCart(false), 2500)
-      showAddToCartToast({
-        productName: product.title,
-        productImage: product.images[0]?.url,
-        variantTitle:
-          selectedVariant && product.variants.length > 1
-            ? selectedVariant.title
-            : undefined,
-      })
-    } catch (err: unknown) {
-      console.error("[ProductDetailClient] handleAddToCart failed:", err)
-      showAddToCartToast({
-        productName: "Feil",
-        variantTitle: "Kunne ikke legge til i handlekurv. Prøv igjen.",
-      })
-    }
+
+    await addItem(selectedVariantId, quantity)
+
+    setAddedToCart(true)
+    setTimeout(() => setAddedToCart(false), 2500)
+
+    showAddToCartToast({
+      productName: product.title,
+      productImage: product.images[0]?.url,
+      variantTitle:
+        selectedVariant && product.variants.length > 1
+          ? selectedVariant.title
+          : undefined,
+    })
   }
 
   return (
@@ -128,36 +68,27 @@ export function ProductDetailClient({ product, content: _content }: ProductDetai
         {price}
       </p>
 
-      {/* Trust sub-line */}
-      <p className="font-sans text-xs text-muted-foreground -mt-2">
-        Inkl. mva · Gratis frakt · Ingen abonnement
-      </p>
-
-      {/* Variant chips */}
+      {/* Variant selector */}
       {hasMultipleVariants && (
         <div className="flex flex-col gap-2">
           <p className="font-sans text-sm font-semibold text-foreground">
-            {variantsToShow[0]?.selectedOptions[0]?.name ?? "Variant"}
+            {product.variants[0]?.selectedOptions[0]?.name ?? "Variant"}
           </p>
           <div className="flex flex-wrap gap-2">
-            {variantsToShow.map((variant) => (
+            {product.variants.map((variant) => (
               <button
                 key={variant.id}
                 type="button"
                 onClick={() => setSelectedVariantId(variant.id)}
                 aria-pressed={variant.id === selectedVariantId}
-                disabled={!variant.availableForSale}
                 className={[
-                  "rounded-full border px-4 py-1.5 font-sans text-sm font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1 disabled:opacity-50 disabled:cursor-not-allowed",
+                  "rounded-lg border px-4 py-2 font-sans text-sm font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1",
                   variant.id === selectedVariantId
-                    ? "border-primary bg-primary text-primary-foreground shadow-sm"
+                    ? "border-primary bg-primary text-primary-foreground"
                     : "border-border bg-background text-foreground hover:border-primary/50 hover:bg-muted",
                 ].join(" ")}
               >
                 {variant.title}
-                {!variant.availableForSale && (
-                  <span className="ml-1.5 text-xs opacity-70">(utsolgt)</span>
-                )}
               </button>
             ))}
           </div>
@@ -176,14 +107,10 @@ export function ProductDetailClient({ product, content: _content }: ProductDetai
         onClick={handleAddToCart}
         disabled={!selectedVariant?.availableForSale || mutating}
         aria-label={`Legg ${quantity} stk av ${product.title} i handlekurven`}
-        className="flex w-full items-center justify-center gap-2.5 rounded-xl bg-accent py-4 font-sans text-sm font-semibold text-accent-foreground tracking-wide transition-all duration-200 hover:bg-accent/80 disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:scale-[0.98]"
+        className="flex h-14 w-full items-center justify-center gap-2.5 rounded-xl bg-primary font-sans text-sm font-semibold tracking-wide text-primary-foreground transition-all duration-200 hover:bg-primary/90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
         <ShoppingBagIcon className="size-4" aria-hidden />
-        {mutating
-          ? "Legger til..."
-          : addedToCart
-          ? "Lagt i handlekurven!"
-          : "Legg i handlekurv"}
+        {mutating ? "Legger til..." : addedToCart ? "Lagt i handlekurven!" : "Legg i handlekurv"}
       </button>
 
       {!selectedVariant?.availableForSale && (
@@ -192,35 +119,76 @@ export function ProductDetailClient({ product, content: _content }: ProductDetai
         </p>
       )}
 
-      {/* Payment icons */}
-      <div className="flex items-center justify-center">
-        <PaymentIcons size="md" />
+      {/* Trust + payment grid */}
+      <div className="mt-2">
+        <TrustPaymentGrid />
       </div>
 
-      {/* Delivery estimate */}
-      <p className="text-center font-sans text-xs text-muted-foreground">
-        Kjøp i dag – forventet levering{" "}
-        <span className="font-medium text-foreground">
-          {deliveryStart}–{deliveryEnd}
-        </span>
-      </p>
+      {/* Product details accordion */}
+      <div className="border-t border-border pt-4">
+        <Accordion>
+          <AccordionItem value="produktdetaljer">
+            <AccordionTrigger className="font-sans text-sm font-semibold text-foreground py-4">
+              Produktdetaljer
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="font-sans text-sm text-muted-foreground leading-relaxed space-y-2 pb-2">
+                <p>{product.description}</p>
+                {product.tags.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 pt-3">
+                    {product.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground capitalize"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
 
-      {/* 2×2 trust cards */}
-      <div className="grid grid-cols-2 gap-3 mt-1">
-        {TRUST_CARDS.map(({ icon: Icon, title, desc }) => (
-          <div
-            key={title}
-            className="flex flex-col items-center gap-1.5 rounded-xl border border-border bg-background p-3 text-center"
-          >
-            <Icon className="size-5 text-accent" aria-hidden />
-            <p className="font-sans text-xs font-semibold text-foreground leading-snug">
-              {title}
-            </p>
-            <p className="font-sans text-xs text-muted-foreground leading-snug">
-              {desc}
-            </p>
-          </div>
-        ))}
+          <AccordionItem value="frakt">
+            <AccordionTrigger className="font-sans text-sm font-semibold text-foreground py-4">
+              Frakt og levering
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="font-sans text-sm text-muted-foreground leading-relaxed space-y-2 pb-2">
+                <p>
+                  Vi sender alle bestillinger innen 1–3 virkedager. Levering til
+                  hele Norge via Posten og PostNord.
+                </p>
+                <ul className="space-y-1 mt-2">
+                  <li>Standardlevering (3–7 virkedager): kr 69</li>
+                  <li>Ekspress (1–3 virkedager): kr 129</li>
+                  <li>Gratis frakt på bestillinger over kr 599</li>
+                </ul>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+
+          <AccordionItem value="retur">
+            <AccordionTrigger className="font-sans text-sm font-semibold text-foreground py-4">
+              Returpolicy
+            </AccordionTrigger>
+            <AccordionContent>
+              <div className="font-sans text-sm text-muted-foreground leading-relaxed space-y-2 pb-2">
+                <p>
+                  Vi ønsker at du skal være helt fornøyd med ditt kjøp. Dersom
+                  du ikke er det, kan du returnere varen innen 30 dager fra
+                  mottaksdato.
+                </p>
+                <p>
+                  Varen må være i original emballasje og ubrukt tilstand. Ta
+                  kontakt med oss på hei@helligeord.no for å starte en
+                  retursak.
+                </p>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
       </div>
     </div>
   )

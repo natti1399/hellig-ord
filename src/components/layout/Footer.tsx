@@ -1,6 +1,5 @@
 import Link from "next/link"
 import { Separator } from "@/components/ui/separator"
-import { PaymentIcons } from "@/components/shared/PaymentIcons"
 
 interface FooterLinkGroup {
   heading: string
@@ -21,17 +20,57 @@ const linkGroups: FooterLinkGroup[] = [
       { href: "/faq", label: "FAQ" },
       { href: "/kontakt", label: "Kontakt oss" },
       { href: "/frakt-og-retur", label: "Frakt og retur" },
-    ],
-  },
-  {
-    heading: "Juridisk",
-    links: [
-      { href: "/vilkar", label: "Kjøpsvilkår" },
       { href: "/personvern", label: "Personvern" },
-      { href: "/frakt-og-retur#returpolicy", label: "Angrerett" },
-      { href: "/informasjonskapsler", label: "Informasjonskapsler" },
     ],
   },
+]
+
+function VippsLogo() {
+  return (
+    <svg viewBox="0 0 60 22" style={{ height: 20, width: "auto" }} aria-label="Vipps" role="img">
+      <text x="0" y="17" fontFamily="Arial, Helvetica, sans-serif" fontWeight="900" fontSize="17" fill="#FF5B24">
+        vipps
+      </text>
+    </svg>
+  )
+}
+
+function KlarnaLogo() {
+  return (
+    <svg viewBox="0 0 62 22" style={{ height: 20, width: "auto" }} aria-label="Klarna" role="img">
+      <rect x="0" y="0" width="62" height="22" rx="4" fill="#FFB3C7" />
+      <text x="7" y="16" fontFamily="Arial, Helvetica, sans-serif" fontWeight="700" fontSize="13" fill="#1A1A1A">
+        Klarna
+      </text>
+    </svg>
+  )
+}
+
+function VisaLogo() {
+  return (
+    <svg viewBox="0 0 54 22" style={{ height: 20, width: "auto" }} aria-label="Visa" role="img">
+      <text x="0" y="18" fontFamily="Arial, Helvetica, sans-serif" fontWeight="900" fontSize="20" fontStyle="italic" fill="#1A1F71">
+        VISA
+      </text>
+    </svg>
+  )
+}
+
+function MastercardLogo() {
+  return (
+    <svg viewBox="0 0 38 24" style={{ height: 20, width: "auto" }} aria-label="Mastercard" role="img">
+      <circle cx="14" cy="12" r="11" fill="#EB001B" />
+      <circle cx="24" cy="12" r="11" fill="#F79E1B" />
+      <path d="M19 5.3a11 11 0 0 1 0 13.4A11 11 0 0 1 19 5.3Z" fill="#FF5F00" />
+    </svg>
+  )
+}
+
+const paymentLogos = [
+  { Logo: VippsLogo, name: "Vipps" },
+  { Logo: KlarnaLogo, name: "Klarna" },
+  { Logo: VisaLogo, name: "Visa" },
+  { Logo: MastercardLogo, name: "Mastercard" },
 ]
 
 export function Footer() {
@@ -68,12 +107,6 @@ export function Footer() {
             <p className="text-sm text-muted-foreground leading-relaxed max-w-xs">
               Vi tilbyr vakre kristne produkter som bringer Guds ord nærmere hjertet. Hvert produkt er laget med kjærlighet og omtanke.
             </p>
-
-            {/* Payment icons */}
-            <div className="mt-4">
-              <p className="text-xs font-medium text-muted-foreground mb-2">Trygg betaling</p>
-              <PaymentIcons size="sm" />
-            </div>
           </div>
 
           {/* Link columns */}
@@ -100,6 +133,15 @@ export function Footer() {
                   )
                 })}
               </ul>
+            </div>
+          ))}
+        </div>
+
+        {/* Payment logos */}
+        <div className="mt-10 flex items-center justify-center gap-4 flex-wrap">
+          {paymentLogos.map(({ Logo, name }) => (
+            <div key={name} className="flex items-center justify-center">
+              <Logo />
             </div>
           ))}
         </div>
