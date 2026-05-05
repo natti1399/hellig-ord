@@ -1,9 +1,11 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ChevronRightIcon } from "lucide-react"
+import { ChevronRightIcon, Star } from "lucide-react"
 import { getProducts, getProductByHandle as fetchProduct } from "@/lib/shopify/actions"
+import { getProductContent } from "@/data/product-content"
 import { ProductDetailClient } from "@/components/product/ProductDetailClient"
+import { ProductAccordion } from "@/components/product/ProductAccordion"
 import { ProductImageGallery } from "@/components/product/ProductImageGallery"
 import type { Product } from "@/types/product"
 
@@ -79,6 +81,7 @@ export default async function ProductPage({
   if (!raw) notFound()
 
   const product = mapToProduct(raw)
+  const content = getProductContent(handle)
 
   return (
     <main className="flex-1">
@@ -129,13 +132,39 @@ export default async function ProductPage({
               {product.title}
             </h1>
 
-            {/* Description */}
-            <p className="font-sans text-base leading-relaxed text-muted-foreground">
-              {product.description.slice(0, 250)}
-              {product.description.length > 250 ? "…" : ""}
-            </p>
+            {/* Star row — 5 anmeldelser */}
+            <div className="flex items-center gap-2">
+              <div className="flex items-center gap-0.5" aria-label="5 av 5 stjerner">
+                {Array.from({ length: 5 }).map((_, i) => (
+                  <Star
+                    key={i}
+                    className="size-4 fill-primary text-primary"
+                    aria-hidden
+                  />
+                ))}
+              </div>
+              <span className="font-heading text-sm italic text-muted-foreground">
+                (5 anmeldelser)
+              </span>
+            </div>
 
-            {/* Interactive area: variants, quantity, CTA, trust grid, accordion */}
+            {/* Hook line (italic emotional pitch) */}
+            {content?.hook && (
+              <p className="font-heading text-base italic text-foreground/80 leading-snug">
+                {content.hook}
+              </p>
+            )}
+
+            {/* 4-row accordion with icons (Beskrivelse / Bruksveileder / Spesifikasjoner / Pleie og vedlikehold) */}
+            {content ? (
+              <ProductAccordion content={content} />
+            ) : (
+              <p className="font-sans text-base leading-relaxed text-muted-foreground">
+                {product.description}
+              </p>
+            )}
+
+            {/* Buy section: price, variants, quantity, CTA, trust grid */}
             <ProductDetailClient product={product} />
           </div>
         </div>

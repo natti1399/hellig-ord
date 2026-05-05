@@ -4,17 +4,10 @@ import { useState } from "react"
 import type { Product } from "@/types/product"
 import { formatPrice } from "@/lib/mock-data"
 import { QuantitySelector } from "./QuantitySelector"
-import {
-  Accordion,
-  AccordionItem,
-  AccordionTrigger,
-  AccordionContent,
-} from "@/components/ui/accordion"
 import { ShoppingBagIcon } from "lucide-react"
 import { useCart } from "@/context/CartContext"
 import { showAddToCartToast } from "@/components/notifications/AddToCartToast"
 import { TrustPaymentGrid } from "@/components/shared/TrustPaymentGrid"
-import { getProductContent } from "@/data/product-content"
 
 interface ProductDetailClientProps {
   product: Product
@@ -120,111 +113,10 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         </p>
       )}
 
-      {/* Trust + payment grid */}
+      {/* Trust + payment grid (8 boxes — locked design system) */}
       <div className="mt-2">
         <TrustPaymentGrid />
       </div>
-
-      {/* Product details accordion — 4 rows per Lorena's spec */}
-      {(() => {
-        const content = getProductContent(product.handle)
-        return (
-          <div className="border-t border-border pt-4">
-            <Accordion>
-              <AccordionItem value="beskrivelse">
-                <AccordionTrigger className="font-sans text-sm font-semibold text-foreground py-4">
-                  Beskrivelse
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="font-sans text-sm text-muted-foreground leading-relaxed space-y-4 pb-2">
-                    {content?.description.length ? (
-                      content.description.map((block, idx) => (
-                        <div key={idx} className="space-y-2">
-                          {block.heading && (
-                            <p className="font-semibold text-foreground">{block.heading}</p>
-                          )}
-                          {block.body && (
-                            <p className="whitespace-pre-line">{block.body}</p>
-                          )}
-                          {block.bullets && (
-                            <ul className="space-y-1.5 list-disc pl-5">
-                              {block.bullets.map((b) => (
-                                <li key={b}>{b}</li>
-                              ))}
-                            </ul>
-                          )}
-                        </div>
-                      ))
-                    ) : (
-                      <p>{product.description}</p>
-                    )}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="bruksveileder">
-                <AccordionTrigger className="font-sans text-sm font-semibold text-foreground py-4">
-                  Bruksveileder
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="font-sans text-sm text-muted-foreground leading-relaxed pb-2">
-                    {content?.usageBullets.length ? (
-                      <ul className="space-y-2 list-disc pl-5">
-                        {content.usageBullets.map((b) => (
-                          <li key={b}>{b}</li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p>Bruksveileder er ikke tilgjengelig for dette produktet.</p>
-                    )}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="spesifikasjoner">
-                <AccordionTrigger className="font-sans text-sm font-semibold text-foreground py-4">
-                  Spesifikasjoner
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="font-sans text-sm text-muted-foreground leading-relaxed space-y-2 pb-2">
-                    {content?.specs.length ? (
-                      <ul className="space-y-1.5 list-disc pl-5">
-                        {content.specs.map((s) => (
-                          <li key={s}>{s}</li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p>Spesifikasjoner er ikke tilgjengelig for dette produktet.</p>
-                    )}
-                    {content?.specsNote && (
-                      <p className="text-xs italic pt-2">{content.specsNote}</p>
-                    )}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-
-              <AccordionItem value="pleie">
-                <AccordionTrigger className="font-sans text-sm font-semibold text-foreground py-4">
-                  Pleie og vedlikehold
-                </AccordionTrigger>
-                <AccordionContent>
-                  <div className="font-sans text-sm text-muted-foreground leading-relaxed pb-2">
-                    {content?.care.length ? (
-                      <ul className="space-y-1.5 list-disc pl-5">
-                        {content.care.map((c) => (
-                          <li key={c}>{c}</li>
-                        ))}
-                      </ul>
-                    ) : (
-                      <p>Pleie- og vedlikeholdsråd er ikke tilgjengelig for dette produktet.</p>
-                    )}
-                  </div>
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </div>
-        )
-      })()}
     </div>
   )
 }
