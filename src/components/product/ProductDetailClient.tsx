@@ -14,6 +14,7 @@ import { ShoppingBagIcon } from "lucide-react"
 import { useCart } from "@/context/CartContext"
 import { showAddToCartToast } from "@/components/notifications/AddToCartToast"
 import { TrustPaymentGrid } from "@/components/shared/TrustPaymentGrid"
+import { getProductContent } from "@/data/product-content"
 
 interface ProductDetailClientProps {
   product: Product
@@ -124,71 +125,106 @@ export function ProductDetailClient({ product }: ProductDetailClientProps) {
         <TrustPaymentGrid />
       </div>
 
-      {/* Product details accordion */}
-      <div className="border-t border-border pt-4">
-        <Accordion>
-          <AccordionItem value="produktdetaljer">
-            <AccordionTrigger className="font-sans text-sm font-semibold text-foreground py-4">
-              Produktdetaljer
-            </AccordionTrigger>
-            <AccordionContent>
-              <div className="font-sans text-sm text-muted-foreground leading-relaxed space-y-2 pb-2">
-                <p>{product.description}</p>
-                {product.tags.length > 0 && (
-                  <div className="flex flex-wrap gap-1.5 pt-3">
-                    {product.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className="rounded-full bg-muted px-3 py-1 text-xs font-medium text-muted-foreground capitalize"
-                      >
-                        {tag}
-                      </span>
-                    ))}
+      {/* Product details accordion — 4 rows per Lorena's spec */}
+      {(() => {
+        const content = getProductContent(product.handle)
+        return (
+          <div className="border-t border-border pt-4">
+            <Accordion>
+              <AccordionItem value="beskrivelse">
+                <AccordionTrigger className="font-sans text-sm font-semibold text-foreground py-4">
+                  Beskrivelse
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="font-sans text-sm text-muted-foreground leading-relaxed space-y-4 pb-2">
+                    {content?.description.length ? (
+                      content.description.map((block, idx) => (
+                        <div key={idx} className="space-y-2">
+                          {block.heading && (
+                            <p className="font-semibold text-foreground">{block.heading}</p>
+                          )}
+                          {block.body && (
+                            <p className="whitespace-pre-line">{block.body}</p>
+                          )}
+                          {block.bullets && (
+                            <ul className="space-y-1.5 list-disc pl-5">
+                              {block.bullets.map((b) => (
+                                <li key={b}>{b}</li>
+                              ))}
+                            </ul>
+                          )}
+                        </div>
+                      ))
+                    ) : (
+                      <p>{product.description}</p>
+                    )}
                   </div>
-                )}
-              </div>
-            </AccordionContent>
-          </AccordionItem>
+                </AccordionContent>
+              </AccordionItem>
 
-          <AccordionItem value="frakt">
-            <AccordionTrigger className="font-sans text-sm font-semibold text-foreground py-4">
-              Frakt og levering
-            </AccordionTrigger>
-            <AccordionContent>
-              <div className="font-sans text-sm text-muted-foreground leading-relaxed space-y-2 pb-2">
-                <p>
-                  Frakt er gratis og inkludert i prisen – du betaler ikke noe ekstra for levering i Norge.
-                </p>
-                <ul className="space-y-1 mt-2">
-                  <li>Levering til hele Norge via Posten og PostNord</li>
-                  <li>Sendes innen 1–3 virkedager</li>
-                  <li>Estimert leveringstid: 5–10 virkedager</li>
-                </ul>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
+              <AccordionItem value="bruksveileder">
+                <AccordionTrigger className="font-sans text-sm font-semibold text-foreground py-4">
+                  Bruksveileder
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="font-sans text-sm text-muted-foreground leading-relaxed pb-2">
+                    {content?.usageBullets.length ? (
+                      <ul className="space-y-2 list-disc pl-5">
+                        {content.usageBullets.map((b) => (
+                          <li key={b}>{b}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p>Bruksveileder er ikke tilgjengelig for dette produktet.</p>
+                    )}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
 
-          <AccordionItem value="retur">
-            <AccordionTrigger className="font-sans text-sm font-semibold text-foreground py-4">
-              Returpolicy
-            </AccordionTrigger>
-            <AccordionContent>
-              <div className="font-sans text-sm text-muted-foreground leading-relaxed space-y-2 pb-2">
-                <p>
-                  Vi ønsker at du skal være helt fornøyd med ditt kjøp. Dersom
-                  du ikke er det, kan du returnere varen innen 30 dager fra
-                  mottaksdato.
-                </p>
-                <p>
-                  Varen må være i original emballasje og ubrukt tilstand. Ta
-                  kontakt med oss på hei@helligeord.no for å starte en
-                  retursak.
-                </p>
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-      </div>
+              <AccordionItem value="spesifikasjoner">
+                <AccordionTrigger className="font-sans text-sm font-semibold text-foreground py-4">
+                  Spesifikasjoner
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="font-sans text-sm text-muted-foreground leading-relaxed space-y-2 pb-2">
+                    {content?.specs.length ? (
+                      <ul className="space-y-1.5 list-disc pl-5">
+                        {content.specs.map((s) => (
+                          <li key={s}>{s}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p>Spesifikasjoner er ikke tilgjengelig for dette produktet.</p>
+                    )}
+                    {content?.specsNote && (
+                      <p className="text-xs italic pt-2">{content.specsNote}</p>
+                    )}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+
+              <AccordionItem value="pleie">
+                <AccordionTrigger className="font-sans text-sm font-semibold text-foreground py-4">
+                  Pleie og vedlikehold
+                </AccordionTrigger>
+                <AccordionContent>
+                  <div className="font-sans text-sm text-muted-foreground leading-relaxed pb-2">
+                    {content?.care.length ? (
+                      <ul className="space-y-1.5 list-disc pl-5">
+                        {content.care.map((c) => (
+                          <li key={c}>{c}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p>Pleie- og vedlikeholdsråd er ikke tilgjengelig for dette produktet.</p>
+                    )}
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            </Accordion>
+          </div>
+        )
+      })()}
     </div>
   )
 }

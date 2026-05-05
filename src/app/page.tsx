@@ -5,7 +5,8 @@ import { ValuePropsSection } from '@/components/home/ValuePropsSection'
 import { BibleQuoteSection } from '@/components/home/BibleQuoteSection'
 import { AboutSection } from '@/components/home/AboutSection'
 import { NewsletterSection } from '@/components/home/NewsletterSection'
-import { TestimonialSection } from '@/components/social-proof/TestimonialSection'
+import { SocialProofSection } from '@/components/home/SocialProofSection'
+import { EmotionalSection } from '@/components/home/EmotionalSection'
 import { StickyMobileCTA } from '@/components/home/StickyMobileCTA'
 import { getProducts } from '@/lib/shopify/actions'
 
@@ -35,8 +36,9 @@ export default async function HomePage() {
     <>
       <HeroSection variantId={krukkeVariantId} />
       <ValuePropsSection />
+      <SocialProofSection />
+      <EmotionalSection />
       <BibleQuoteSection />
-      <TestimonialSection />
       <FeaturedProductSection />
       <AboutSection />
       <NewsletterSection />

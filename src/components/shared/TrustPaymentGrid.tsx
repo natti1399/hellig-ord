@@ -1,10 +1,10 @@
 import { HomeIcon, TruckIcon, RotateCcwIcon, ShieldCheckIcon } from "lucide-react"
 
 const trustItems = [
-  { icon: HomeIcon, label: "Trygg handel" },
-  { icon: TruckIcon, label: "Gratis frakt" },
-  { icon: RotateCcwIcon, label: "30 dagers retur" },
-  { icon: ShieldCheckIcon, label: "Sikker betaling" },
+  { icon: HomeIcon, label: "Norsk nettbutikk" },
+  { icon: TruckIcon, label: "Gratis frakt i Norge" },
+  { icon: RotateCcwIcon, label: "30 dagers åpent kjøp" },
+  { icon: ShieldCheckIcon, label: "Trygg betaling" },
 ]
 
 function VippsLogo() {
