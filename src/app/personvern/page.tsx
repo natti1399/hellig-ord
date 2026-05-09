@@ -1,7 +1,5 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Header } from "@/components/layout/Header"
-import { Footer } from "@/components/layout/Footer"
 import { Separator } from "@/components/ui/separator"
 
 export const metadata: Metadata = {
@@ -34,10 +32,7 @@ function PolicySection({ id, heading, children }: PolicySectionProps) {
 
 export default function PersonvernPage() {
   return (
-    <div className="flex min-h-full flex-col">
-      <Header />
-
-      <main className="flex-1 bg-background" id="main-content">
+    <div className="bg-background">
         {/* Page header */}
         <div className="bg-primary/5 border-b border-border/50">
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-14">
@@ -87,7 +82,7 @@ export default function PersonvernPage() {
               <p>
                 <span className="font-medium text-foreground">E-post:</span>{" "}
                 <span className="text-muted-foreground italic">
-                  [E-postadresse opprettes]
+                  kundeservice@helligeord.no
                 </span>
               </p>
             </div>
@@ -435,9 +430,6 @@ export default function PersonvernPage() {
             </p>
           </PolicySection>
         </div>
-      </main>
-
-      <Footer />
     </div>
   )
 }

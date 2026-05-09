@@ -31,7 +31,7 @@ const faqItems: FaqItem[] = [
     id: "retur",
     question: "Kan jeg returnere et produkt?",
     answer:
-      "Ja, du har 14 dagers angrerett i henhold til norsk lov. Produktet må returneres ubrukt og i originalemballasjen.",
+      "Ja, vi tilbyr 30 dagers åpent kjøp. Produktet må returneres ubrukt og i originalemballasjen. Returfrakt betales av kunden.",
   },
   {
     id: "betaling",
