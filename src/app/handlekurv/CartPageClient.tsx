@@ -22,7 +22,7 @@ import { isAllowedCheckoutUrl } from "@/lib/shopify/checkout"
 // Helpers
 // ---------------------------------------------------------------------------
 
-const FREE_SHIPPING_THRESHOLD = 499
+const FREE_SHIPPING_THRESHOLD = 0
 
 function formatNOK(amount: string | number): string {
   const num = Number(amount)

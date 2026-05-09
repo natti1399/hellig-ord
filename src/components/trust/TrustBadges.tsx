@@ -7,7 +7,7 @@ interface TrustBadge {
 
 const badges: TrustBadge[] = [
   { icon: '🔒', label: 'Sikker betaling' },
-  { icon: '🚚', label: 'Gratis frakt over 499 kr' },
+  { icon: '🚚', label: 'Gratis frakt i Norge' },
   { icon: '↩️', label: '14 dagers angrerett' },
   { icon: '💳', label: 'Visa, Mastercard, Klarna, Vipps' },
 ]
