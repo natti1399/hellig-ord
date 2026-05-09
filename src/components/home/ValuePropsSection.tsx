@@ -17,13 +17,19 @@ const valueProps: ValueProp[] = [
     icon: '📦',
     title: 'Rask og trygg levering',
     description:
-      'Vi sender innen 1–3 virkedager til hele Norge, pakket med kjærlighet og omsorg.',
+      'Vi sender til hele Norge, pakket med kjærlighet og omsorg.',
   },
   {
     icon: '💛',
     title: 'Inspirert av Guds ord',
     description:
       'Alle produkter er laget med kjærlighet og bibelsk inspirasjon — for å berike hverdagen din.',
+  },
+  {
+    icon: '🔄',
+    title: '30 dagers åpent kjøp',
+    description:
+      'Ikke fornøyd? Du har 30 dager på å returnere varen – enkelt og trygt.',
   },
 ]
 
@@ -44,7 +50,7 @@ export function ValuePropsSection() {
           <div className="mx-auto h-px w-16 bg-primary/20" aria-hidden="true" />
         </FadeInSection>
 
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3 md:gap-10">
+        <div className="grid grid-cols-2 gap-6 md:grid-cols-4 md:gap-8">
           {valueProps.map((prop, index) => (
             <FadeInSection key={prop.title} delay={index * 0.15} direction="up">
               <article className="flex flex-col items-center text-center">

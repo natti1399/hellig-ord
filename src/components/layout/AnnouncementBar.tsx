@@ -5,7 +5,7 @@ export function AnnouncementBar() {
       role="banner"
       aria-label="Tilbudsinformasjon"
     >
-      <p className="font-medium">✝ Gratis frakt i hele Norge – inkludert i prisen ✝</p>
+      <p className="font-medium">✝️ Finn styrke i Guds ord, hver dag ✝️</p>
     </div>
   )
 }

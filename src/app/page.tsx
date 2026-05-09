@@ -7,6 +7,7 @@ import { AboutSection } from '@/components/home/AboutSection'
 import { NewsletterSection } from '@/components/home/NewsletterSection'
 import { SocialProofSection } from '@/components/home/SocialProofSection'
 import { EmotionalSection } from '@/components/home/EmotionalSection'
+import { ProductCardsSection } from '@/components/home/ProductCardsSection'
 import { StickyMobileCTA } from '@/components/home/StickyMobileCTA'
 import { getProducts } from '@/lib/shopify/actions'
 
@@ -35,11 +36,12 @@ export default async function HomePage() {
   return (
     <>
       <HeroSection variantId={krukkeVariantId} />
-      <ValuePropsSection />
+      <FeaturedProductSection />
       <SocialProofSection />
       <EmotionalSection />
+      <ProductCardsSection />
+      <ValuePropsSection />
       <BibleQuoteSection />
-      <FeaturedProductSection />
       <AboutSection />
       <NewsletterSection />
       <StickyMobileCTA variantId={krukkeVariantId} />

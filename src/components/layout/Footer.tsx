@@ -165,7 +165,7 @@ export function Footer() {
             href="/vilkar"
             className="text-xs text-muted-foreground hover:text-foreground transition-colors duration-150"
           >
-            Vilkår
+            Kjøpsvilkår
           </Link>
           <Link
             href="/informasjonskapsler"

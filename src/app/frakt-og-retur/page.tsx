@@ -3,6 +3,7 @@ import Link from "next/link"
 import { Header } from "@/components/layout/Header"
 import { Footer } from "@/components/layout/Footer"
 import { Separator } from "@/components/ui/separator"
+import { ReturnForm } from "./ReturnForm"
 
 export const metadata: Metadata = {
   title: "Frakt og retur",
@@ -40,7 +41,7 @@ interface InfoCardProps {
 function InfoCard({ label, value }: InfoCardProps) {
   return (
     <div className="flex flex-col gap-1 rounded-lg border border-border bg-card px-5 py-4">
-      <span className="text-xs uppercase tracking-widest text-muted-foreground font-medium">
+      <span className="text-xs tracking-wide text-muted-foreground font-medium">
         {label}
       </span>
       <span className="font-heading text-lg font-bold text-primary leading-tight">
@@ -75,10 +76,11 @@ export default function FraktOgReturPage() {
         {/* Quick summary cards */}
         <div className="border-b border-border/50 bg-muted/40">
           <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-8">
-            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
               <InfoCard label="Leveringstid" value="Ca. 10 dager" />
               <InfoCard label="Frakt" value="Gratis i hele Norge" />
               <InfoCard label="Åpent kjøp" value="30 dager" />
+              <InfoCard label="Retur" value="Returfrakt betales av kunden" />
             </div>
           </div>
         </div>
@@ -354,6 +356,22 @@ export default function FraktOgReturPage() {
               -side.
             </p>
           </PolicySection>
+
+          <Separator />
+
+          <section aria-labelledby="returskjema-heading">
+            <h2
+              id="returskjema-heading"
+              className="font-heading text-xl font-bold text-primary mb-4 leading-snug"
+            >
+              8. Returskjema
+            </h2>
+            <p className="text-foreground/80 leading-[1.85] text-[0.9375rem] mb-8">
+              Fyll ut skjemaet nedenfor for å starte en retur. Vi kontakter deg
+              innen 2 virkedager med videre instruksjoner.
+            </p>
+            <ReturnForm />
+          </section>
         </div>
       </main>
 
