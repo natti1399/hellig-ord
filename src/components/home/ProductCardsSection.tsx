@@ -28,7 +28,7 @@ export async function ProductCardsSection() {
             const variant = product.variants.edges[0]?.node
             const price = variant?.price
               ? formatPrice(
-                  parseFloat(variant.price.amount),
+                  variant.price.amount,
                   variant.price.currencyCode
                 )
               : null
