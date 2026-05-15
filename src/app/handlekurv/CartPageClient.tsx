@@ -264,7 +264,7 @@ function OrderSummary({ subtotal, checkoutUrl, mutating }: OrderSummaryProps) {
         href={checkoutUrl && isAllowedCheckoutUrl(checkoutUrl) ? checkoutUrl : "#"}
         target="_blank"
         rel="noopener noreferrer"
-        className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-md bg-accent text-accent-foreground text-sm font-semibold hover:bg-accent/90 transition-colors"
+        className="mt-6 inline-flex h-12 w-full items-center justify-center rounded-md bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors"
       >
         Gå til kassen
       </a>

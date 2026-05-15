@@ -29,9 +29,6 @@ export function AboutSection() {
     >
       <div className="mx-auto max-w-5xl px-6 lg:px-8">
         <FadeInSection className="mb-12 text-center" delay={0}>
-          <p className="font-sans text-xs tracking-[0.2em] uppercase text-accent font-medium mb-3">
-            Hvorfor velge oss
-          </p>
           <h2
             id="trust-heading"
             className="font-heading text-2xl font-bold tracking-wider text-primary sm:text-3xl"

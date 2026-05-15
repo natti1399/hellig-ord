@@ -294,7 +294,7 @@ export function CartDrawer() {
                 href={cart?.checkoutUrl ?? "#"}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-11 w-full items-center justify-center rounded-md bg-accent text-accent-foreground text-sm font-semibold hover:bg-accent/90 transition-colors"
+                className="inline-flex h-11 w-full items-center justify-center rounded-md bg-primary text-primary-foreground text-sm font-semibold hover:bg-primary/90 transition-colors"
               >
                 Gå til kassen
               </a>

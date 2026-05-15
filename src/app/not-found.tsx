@@ -81,7 +81,7 @@ export default function NotFound() {
         >
           <Link
             href="/"
-            className="inline-flex h-12 items-center justify-center rounded-full bg-accent px-8 font-sans text-sm font-medium tracking-wide text-accent-foreground transition-all duration-300 hover:bg-accent/90 hover:shadow-lg hover:shadow-accent/20"
+            className="inline-flex h-12 items-center justify-center rounded-full bg-primary px-8 font-sans text-sm font-medium tracking-wide text-primary-foreground transition-all duration-300 hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20"
           >
             Tilbake til forsiden
           </Link>

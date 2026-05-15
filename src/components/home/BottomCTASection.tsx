@@ -18,7 +18,7 @@ export function BottomCTASection() {
           <div className="mt-8">
             <Link
               href={PRODUCT_URL}
-              className="inline-flex h-14 items-center justify-center rounded-full bg-accent px-10 text-base font-semibold tracking-wide text-accent-foreground shadow-lg transition-all duration-300 hover:bg-accent/90 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              className="inline-flex h-14 items-center justify-center rounded-full bg-primary px-10 text-base font-semibold tracking-wide text-primary-foreground shadow-lg ring-1 ring-primary-foreground/20 transition-all duration-300 hover:bg-primary/90 hover:shadow-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
               Bestill din krukke nå
             </Link>

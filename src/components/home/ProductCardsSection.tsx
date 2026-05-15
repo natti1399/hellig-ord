@@ -8,20 +8,8 @@ export async function ProductCardsSection() {
   const products = await getProducts()
 
   return (
-    <section className="bg-background py-16 md:py-24" aria-labelledby="product-cards-heading">
+    <section className="bg-background py-16 md:py-24" aria-label="Produkter">
       <div className="mx-auto max-w-6xl px-6 lg:px-8">
-        <FadeInSection className="mb-10 text-center" delay={0} direction="up">
-          <h2
-            id="product-cards-heading"
-            className="font-heading text-2xl font-bold text-primary sm:text-3xl"
-          >
-            Våre produkter
-          </h2>
-          <p className="mt-3 font-sans text-sm text-muted-foreground">
-            Håndplukket med omtanke – laget for å styrke troen din.
-          </p>
-        </FadeInSection>
-
         <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">
           {products.slice(0, 4).map((product, index) => {
             const image = product.images.edges[0]?.node
@@ -65,15 +53,6 @@ export async function ProductCardsSection() {
             )
           })}
         </div>
-
-        <FadeInSection delay={0.4} className="mt-10 text-center">
-          <Link
-            href="/produkter"
-            className="inline-flex items-center justify-center rounded-xl border border-primary/30 bg-transparent px-8 py-3 font-sans text-sm font-semibold text-primary hover:bg-primary/5 transition-colors duration-200"
-          >
-            Se alle produkter
-          </Link>
-        </FadeInSection>
       </div>
     </section>
   )

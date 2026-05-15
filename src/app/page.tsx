@@ -1,7 +1,5 @@
 import type { Metadata } from 'next'
 import { HeroSection } from '@/components/home/HeroSection'
-import { FeaturedProductSection } from '@/components/home/FeaturedProductSection'
-import { ValuePropsSection } from '@/components/home/ValuePropsSection'
 import { BibleQuoteSection } from '@/components/home/BibleQuoteSection'
 import { AboutSection } from '@/components/home/AboutSection'
 import { NewsletterSection } from '@/components/home/NewsletterSection'
@@ -36,11 +34,9 @@ export default async function HomePage() {
   return (
     <>
       <HeroSection variantId={krukkeVariantId} />
-      <FeaturedProductSection />
       <SocialProofSection />
       <EmotionalSection />
       <ProductCardsSection />
-      <ValuePropsSection />
       <BibleQuoteSection />
       <AboutSection />
       <NewsletterSection />

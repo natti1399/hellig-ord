@@ -100,7 +100,7 @@ export default function Error({ reset }: ErrorProps) {
         >
           <Button
             onClick={reset}
-            className="h-12 rounded-full bg-accent px-8 font-sans text-sm font-medium tracking-wide text-accent-foreground transition-all duration-300 hover:bg-accent/90 hover:shadow-lg hover:shadow-accent/20"
+            className="h-12 rounded-full bg-primary px-8 font-sans text-sm font-medium tracking-wide text-primary-foreground transition-all duration-300 hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20"
           >
             Prøv igjen
           </Button>

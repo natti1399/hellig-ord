@@ -75,7 +75,7 @@ export function NewsletterSection() {
             <Button
               type="submit"
               disabled={status === 'loading' || status === 'success'}
-              className="h-11 rounded-full bg-accent text-accent-foreground hover:bg-accent/90 px-7 font-sans text-sm font-medium tracking-wide transition-all duration-300 hover:shadow-lg hover:shadow-accent/30 disabled:opacity-60"
+              className="h-11 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 px-7 font-sans text-sm font-medium tracking-wide transition-all duration-300 hover:shadow-lg hover:shadow-primary/30 disabled:opacity-60"
             >
               {status === 'loading' ? 'Melder på...' : status === 'success' ? 'Påmeldt!' : 'Meld meg på'}
             </Button>
